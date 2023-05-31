@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title>Square Invest</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google-site-verification" content="nUA2wJ9l3ZJOwhlJavN4RTA-sntIbPUxpi2s9gHHZjU" />
+    <meta name="description" content="Résidence universitaire, étudiante du Square à Saint Martin d'Hères" />
+    <link type="text/css" href="./css/style.css" rel="StyleSheet" />
+    <link type="text/css" href="./css/gallery.css" rel="StyleSheet" />
+    <link type="text/css" href="./css/account.css" rel="StyleSheet" />
+    <script src="/script/navigate.js" type="module"></script>
+    <script src="/script/account.js" type="module"></script>
+    <script src="/script/document.js" type="module"></script>
+    <script src="/script/annonce.js" type="module"></script>
+    <script src="/script/gallery.js" type="module"></script>
+    <script src="/script/messagerie.js" type="module"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Merriweather&family=Montserrat:wght@300&family=Playfair&family=Roboto:wght@300&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <nav id="menu">
+        <div class="title">
+          <div id="title">Square<span id="title2">Invest</span></div>
+        </div>
+        <ul class="menu">
+          <li id="home-main">Accueil</li>
+          <li id="appartement-main">Appartements</li>
+          <li id="document-main">Documents</li>
+          <li id="messagerie-main">Messagerie</li>
+          <li id="admin-main" class="hidden">Administration</li>
+        </ul>
+
+        <ul class="account">
+          <li id="login-main">Connexion</li>
+          <li id="register-main">Inscription</li>
+        </ul>
+
+        <ul class="connected hidden">
+          <li id="show-account"></li>
+          <li id="account-main">Mon compte</li>
+          <li id="logout">Déconnexion</li>
+        </ul>
+      </nav>
+    </header>
+    <hr />
+    <main>
+      <!-- RESIDENCE INFO -->
+      <div class="home-main">
+        <img src="./images/frontbuilding.png" class="wide-image" />
+        <div class="home">
+          <div class="home-title">Localisation</div>
+          <div class="home-more">Adresse : 16 rue de Mayencin, Saint Martin d'Hères
+            
+            A proximité (1min à pied) de l'arrêt de tram "Mayencin Champ Roman" (ligne B)
+
+            Très proche du campus universitaire et à 15mins du centre ville de Grenoble
+
+            Nombreux commerces (boulangerie, pharmacie, supermarché) accessibles aux alentours
+          </div>
+        </div>
+        <div class="home">
+          <div class="home-title">Services</div>
+          <div class="home-more">Local à vélos disponible
+            
+            Parking privé réservé aux locataires
+
+            Laverie à disposition
+
+            Entrée protégée par un digicode
+
+            Entretien régulier des parties communes
+
+            Connection internet haut débit
+          </div>
+        </div>
+        <div class="home">
+          <div class="home-title">À propos</div>
+          <div class="home-more">Résidence d'une trentaine d'appartements meublés et équipés
+
+            Appartements de 19 à 26m²
+
+            Loyer à partir de 480€/mois
+
+            Charge comprise (eau uniquement)
+
+            APL possible
+
+            Caution de 1 mois de loyer
+
+            Pas de frais d'agence
+          </div>
+        </div>
+        <hr>
+        <div class="home grid">
+          <a href="./images/entrance.jpg" target="_blank">
+            <img src="./images/entrance.jpg" alt="Entrée résidence" class="wide-image"/>
+          </a>
+          <a href="./images/inside.jpg" target="_blank">
+            <img src="./images/inside.jpg" alt="Parties communes" class="wide-image"/>
+          </a>
+          <a href="./images/bike.jpg" target="_blank">
+            <img src="./images/bike.jpg" alt="Local à vélos" class="wide-image"/>
+          </a>
+          <a href="./images/laverie.jpg" target="_blank">
+            <img src="./images/laverie.jpg" alt="Laverie" class="wide-image"/>
+          </a>
+        </div>
+      </div>
+
+      <!-- APPARTEMENT LIST -->
+      <div class="appartement-main hidden">
+        <!-- <div id="search">
+          <div id="search-title">Recherche</div>
+          <div id="search-form">
+            <form>
+              <input type="text" name="search" placeholder="Rechercher" />
+              <input type="submit" value="Rechercher" />
+            </form>
+          </div>
+        </div> -->
+        <div id="appartement-list">
+          <div class="appartement">
+            <div class="appartement-image">
+              <img src="./images/example.jpg" class="crop-image" />
+            </div>
+            <div class="appartement-content">
+              <div class="appartement-title">Appartement 111</div>
+              <hr class="appartement-hr" />
+              <div class="appartement-description">
+                Oui Toute charge comprise
+              </div>
+            </div>
+            <div class="appartement-infos">
+              <div class="appartement-price">500€/mois</div>
+            </div>
+          </div>
+          <div class="appartement">
+            <div class="appartement-image">
+              <img src="./images/example.jpg" class="crop-image" />
+            </div>
+            <div class="appartement-content">
+              <div class="appartement-title">Appartement 111</div>
+              <hr class="appartement-hr" />
+              <div class="appartement-description">Oui</div>
+            </div>
+            <div class="appartement-infos">
+              <div class="appartement-price">500€/mois</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MON COMPTE -->
+      <div class="account-main hidden">
+        <div class="account-title">Mon compte</div>
+        <div class="account-content">
+          <div class="edit">
+            <div class="edit-title">Modifier mon adresse mail</div>
+            <p id="error-edit-mail"></p>
+            <div class="edit-mail-content">
+              <input
+                type="email"
+                id="new-mail"
+                placeholder="Nouvelle adresse mail"
+              />
+              <button id="edit-mail">Modifier</button>
+            </div>
+          </div>
+          <div class="edit">
+            <div class="edit-title">Modifier mon mot de passe</div>
+            <p id="error-edit-password"></p>
+            <div class="edit-password-content">
+              <input
+                type="password"
+                id="old-password"
+                placeholder="Ancien mot de passe"
+              />
+              <input
+                type="password"
+                id="new-password"
+                placeholder="Nouveau mot de passe"
+              />
+              <button id="edit-password">Modifier</button>
+            </div>
+          </div>
+          <div class="edit">
+            <div class="edit-title">Modifier mes préférences</div>
+            <div class="edit-preference-content">
+              <label for="edit-pref"
+                >Recevoir un mail à la réception d'un message?</label
+              >
+              <input type="checkbox" id="edit-pref" name="edit-pref" />
+              <button id="edit-preference">Modifier</button>
+            </div>
+          </div>
+          <button id="delete-account">Supprimer mon compte</button>
+        </div>
+      </div>
+
+      <!-- SELECTED ANNONCE -->
+
+      <div class="selected-annonce hidden">
+        <div class="selected-title">
+          TITLE WOW MAIS COMMENNT APPARTEMENT 2 PIECES 500M²
+        </div>
+        <div class="selected-content">
+          <div id="gallery">
+            <img src="./images/image1.jpg" class="slide" />
+            <img src="./images/image2.jpg" class="slide" />
+            <div id="prev-arrow">&#10094;</div>
+            <div id="next-arrow">&#10095;</div>
+          </div>
+          <div class="selected-description">
+            HELLO CECI EST UNE LONGUE DESCRIPTION
+            WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOW
+          </div>
+        </div>
+      </div>
+
+      <!-- REGISTER FORM -->
+      <div class="register-main hidden">
+        <div class="register-form">
+          <div class="form-group">
+            <label for="name">Nom:</label>
+            <input type="text" id="username-register" name="name" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email-register" name="email" required />
+          </div>
+          <div class="form-group">
+            <label for="password">Mot de passe:</label>
+            <input
+              type="password"
+              id="password-register"
+              name="password"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="msgMail" class="checkbox">
+              Recevoir un mail lorsqu'un nouveau message est reçu?</label
+            >
+            <input type="checkbox" id="msgMail" name="msgMail" />
+          </div>
+          <p id="error-register"></p>
+          <button id="register">S'enregistrer</button>
+        </div>
+        <div class="confirmation hidden">
+          <div class="back-button"></div>
+          <p>Un code de confirmation vous a été envoyé par mail</p>
+          <input type="text" id="code" placeholder="Code de confirmation" />
+          <button id="confirm">Confirmer</button>
+        </div>
+      </div>
+
+
+      <!-- LOGIN FORM -->
+      <div class="login-main hidden">
+        <div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email-login" name="email" required />
+          </div>
+          <div class="form-group">
+            <label for="password">Mot de passe:</label>
+            <input
+              type="password"
+              id="password-login"
+              name="password"
+              required
+            />
+          </div>
+          <p id="error-login"></p>
+          <button id="login">Se connecter</button>
+        </div>
+      </div>
+
+      <!-- DOCUMENTS -->
+      <div class="document-main hidden">
+        <div class="disconnected">
+          Vous devez être connecté(e) pour déposer vos documents
+        </div>
+        <div id="document-list"></div>
+        <div id="document-form">
+          <div class="form-group">
+            <label for="document">Sélectionner un document:</label>
+          </div>
+          <input
+            type="file"
+            id="document"
+            name="document"
+            accept=".pdf"
+            required
+          />
+          <button id="send-doc">Envoyer document</button>
+        </div>
+      </div>
+
+      <!-- MESSAGERIE -->
+      <div class="messagerie-main hidden">
+        <div class="disconnected">
+          Vous devez être connecté(e) pour accéder à la messagerie
+        </div>
+        <div class="messagerie-contacts">
+          <div class="messagerie-title">LISTE DES CONTACTS</div>
+          <ul id="messagerie-list"></ul>
+        </div>
+        <div class="messagerie-messages hidden">
+          <div class="back-button"></div>
+          <div class="messagerie-title">Conversation avec</div>
+          <div id="messagerie-messages-list">
+            <div class="received">HELLO</div>
+            <div class="sent">HOLA</div>
+            <div class="sent">HOLA1</div>
+            <div class="received">HELLO1</div>
+            <div class="received">HELLO2</div>
+            <div class="received">HELLO2</div>
+            <div class="received">HELLO2</div>
+            <div class="received">HELLO2</div>
+            <div class="received">HELLO2</div>
+            <div class="received">HELLO2</div>
+            <div class="received">HELLO2</div>
+            <div class="received">HELLO3</div>
+          </div>
+          <div class="write-send">
+            <input type="text" id="message" placeholder="Ecrire un message" />
+            <button id="send-message">Envoyer message</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN PANEL -->
+      <div class="admin-main hidden">
+        <div class="admin-title">AJOUTER UNE ANNONCE</div>
+        <div id="ajout-annonce">
+          <input
+            type="text"
+            id="titre-annonce"
+            placeholder="Titre de l'annonce"
+          />
+          <textarea id="description-annonce"> </textarea>
+          <input
+            type="text"
+            id="prix-annonce"
+            placeholder="Prix de l'annonce"
+          />
+          <input type="file" id="image" multiple="multiple" />
+          <button id="send-annonce">Envoyer annonce</button>
+        </div>
+        <div class="admin-title">LISTE DES ANNONCES</div>
+        <div id="liste-annonces"></div>
+        <div class="admin-title">LISTE DES UTILISATEURS</div>
+        <div id="liste-utilisateurs">
+          <div class="utilisateur">
+            <div class="utilisateur-title">Utilisateur 1</div>
+            <button class="utilisateur-doc">Document</button>
+            <button class="utilisateur-doc">Document</button>
+            <button class="utilisateur-delete">Supprimer utilisateur</button>
+            <hr class="utilisateur-hr" />
+          </div>
+          <div class="utilisateur">
+            <div class="utilisateur-title">Utilisateur 1</div>
+            <button class="utilisateur-doc">Document</button>
+            <button class="utilisateur-doc">Document</button>
+            <button class="utilisateur-delete">Supprimer utilisateur</button>
+            <hr class="utilisateur-hr" />
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+</html>

@@ -1,0 +1,651 @@
+/* Styles for the general layout */
+
+body {
+  background-color: #ccc;
+  font-family: 'Lato', sans-serif;
+}
+
+header {
+  text-align: center;
+}
+
+.title {
+  width: 100%;
+  font-weight: 1000;
+  display : flex;
+  align-items: center;
+  justify-content: center;
+  margin-right : 30px;
+}
+
+#title {
+  font-size: 2em;
+  color: #ffffff;
+  text-shadow: 2px 2px 2px #000;
+}
+
+#title2 {
+  color: #440000;
+}
+
+main {
+  min-height: 80vh;
+}
+
+footer {
+  padding: 30px;
+  background-color: #440000;
+}
+
+/* MENU */
+
+#menu {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.menu {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-width: 500px;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #440000;
+  margin: 0;
+  padding: 0;
+}
+
+.menu li {
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.menu li:hover {
+  color: #ccc;
+}
+
+.account {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.account li {
+  color: black;
+  font-size: 1em;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.connected {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  justify-content: center;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#logout {
+  font-size: 0.8em;
+  color: blue;
+  cursor: pointer;
+}
+
+#account-main{
+  font-size: 0.8em;
+  color: blue;
+  cursor: pointer;
+}
+
+.disconnected {
+  text-align: center;
+  margin: 20px auto;
+  margin-top:0px;
+}
+
+/* HOME */
+.home{
+  display : flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  overflow: hidden;
+  margin: 30px auto;
+}
+
+.home-title{
+  font-size: 2em;
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+.home-more{
+  text-align: center;
+  font-size : 1.1em;
+  white-space: pre-line;
+  margin-bottom : 30px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 80%;
+  margin-bottom : 30px;
+}
+
+.wide-image{
+  display : flex;
+  align-items: center;
+  margin : 0 auto;
+  width: 80%;
+  overflow: hidden;
+}
+
+/* APPARTEMENT */
+
+#appartement-list {
+  width: 80%;
+  max-width: 60em;
+  margin: 30px auto;
+}
+
+.crop-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+.appartement {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+  padding: 10px;
+  background-color: #e4e3e3;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-height: 150px;
+}
+
+.appartement-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.appartement-content {
+  display: flex;
+  flex-direction: column;
+  margin-left: 1.5em;
+  margin-right: 1.5em;
+  width: 55%;
+  overflow: hidden;
+}
+
+.appartement-title {
+  font-weight: 600;
+  font-size: 1.5em;
+  word-wrap: break-word;
+}
+
+.appartement-hr {
+  border: none; /* remove the default line style */
+  border-top: 1px solid black; /* set the style and color of the line */
+  margin: 10px 0; /* add some margin above and below the line */
+}
+
+.appartement-description {
+  word-wrap: break-word;
+  font-size: 1em;
+  white-space: pre-line;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+}
+
+.appartement-infos {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  min-width: 10%;
+  margin: 0 auto;
+}
+
+.appartement-price {
+  font-size: 1.2em;
+  font-weight: 600;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+/* REGISTER */
+
+.register-main {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  margin-top : 50px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="checkbox"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button#register {
+  background-color: #4caf50;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+/* LOGIN */
+
+.login-main {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+button#login {
+  background-color: #4caf50;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* DOCUMENT */
+
+.document-main {
+  text-align: center;
+  display : flex;
+  margin : 30px auto;
+  flex-direction: column;
+}
+
+#document-form {
+  margin: 50px auto;
+}
+
+
+/* ADMIN */
+
+.admin-main > * {
+  margin: 0 auto;
+  flex-direction: column;
+  display: flex;
+  width: 70%;
+}
+
+.admin-title {
+  font-weight: 600;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: 30px;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* MESSAGERIE */
+
+.messagerie-main {
+  display: flex;
+  flex-direction: column;
+  margin: 30px auto;
+  max-width: 60%;
+}
+
+.messagerie-contacts {
+  display: flex;
+  flex-direction: column;
+}
+
+#messagerie-list {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  height: 70vh;
+}
+
+.messagerie-user {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  border-bottom: 1px solid black;
+  cursor: pointer;
+}
+
+.messagerie-user:hover {
+  background-color: #e4e3e3;
+  color: #440000;
+}
+
+.messagerie-title {
+  text-align: center;
+  margin: 0 auto;
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+.messagerie-messages {
+  display: flex;
+  flex-direction: column;
+}
+
+#messagerie-messages-list {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  height: 70vh;
+  overflow-y: scroll;
+}
+
+.write-send {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.write-send input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+}
+
+.write-send button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  background-color: #337ab7;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.write-send button:hover {
+  background-color: #23527c;
+}
+
+.received {
+  width: fit-content;
+  background-color: #e4e3e3;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 10px;
+  margin: 10px 30px;
+  max-width: 40%;
+  word-wrap: break-word;
+}
+
+.sent {
+  width: fit-content;
+  background-color: #440000;
+  color: white;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 10px;
+  margin: 10px 30px;
+  align-self: flex-end;
+  max-width: 40%;
+  word-wrap: break-word;
+}
+
+/* SPECIAL */
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+
+.back-button {
+  display: flex;
+  margin-bottom: 30px;
+  width: 20px;
+  height: 20px;
+  cursor : pointer;
+}
+
+.back-button::before {
+  content: "";
+  position: absolute;
+  transform: translate(-50%, -50%) rotate(45deg);
+  rotate: 180deg;
+  width: 10px;
+  height: 10px;
+  border-top: 2px solid black;
+  border-right: 2px solid black;
+}
+
+.back-button:hover::before {
+  border-color: #440000; /* Modifier la couleur de la flèche au survol */
+}
+
+.hidden {
+  display: none;
+}
+
+@media only screen and (max-width: 900px) {
+  /* MENU */
+  .title {
+    display : flex;
+    justify-content: center;
+    font-size: 1.5em;
+  }
+
+  #menu {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #menu::after {
+    content: "---";
+    color: white;
+    width: 80%;
+    margin: 10px auto;
+    background-color: #440000;
+  }
+
+  #menu:hover::after {
+    display: none;
+  }
+
+  .menu {
+    display: none;
+  }
+
+  #menu:hover .menu {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    list-style: none;
+    min-width: 0;
+  }
+
+  .menu li {
+    font-size: large;
+    padding: 10px 0px;
+    width: 100%;
+  }
+
+  .menu li:hover {
+    color: black;
+  }
+
+  .account {
+    display: none;
+  }
+
+  #menu:hover .account {
+    display: block;
+    list-style: none;
+    background-color: #440000;
+  }
+
+  .account li {
+    font-size: large;
+    padding: 10px 0px;
+    margin: 0;
+    width: 100%;
+    color: white;
+  }
+
+  .account li:hover {
+    color: black;
+  }
+
+  #menu li:hover {
+    background-color: #ccc;
+  }
+
+  .connected {
+    display: none;
+  }
+
+  #menu:hover .connected {
+    display: block;
+    list-style: none;
+    background-color: #440000;
+  }
+
+  #menu:hover #show-account {
+    display: none;
+  }
+
+  #menu:hover #logout {
+    padding: 10px 0px;
+    font-size: large;
+    color: white;
+  }
+
+  #menu:hover #account-main {
+    padding : 10px 0px;
+    font-size: large;
+    color :white;
+  }
+
+  #menu:hover .hidden {
+    display: none;
+  }
+
+  /* HOME */
+  .grid{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* APPARTEMENTS */
+  .wide-image{
+    width: 100%;
+  }
+
+  #appartement-list {
+    width: 100%;
+  }
+
+  .appartement {
+    display : flex;
+    flex-wrap: wrap;
+    max-height: 200px;
+  }
+  
+  .appartement-content {
+    width : auto;
+    flex-grow: 1;
+  }
+
+  .appartement-title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .appartement-infos {
+    margin: 20px auto;
+    display : flex;
+    flex-direction: row;
+    border: 1px solid black;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .appartement{
+    max-height : fit-content;
+    display : flex;
+    flex-direction: column;
+  }
+
+  .appartement-content{
+    display : flex;
+    margin-top : 10px
+  }
+}

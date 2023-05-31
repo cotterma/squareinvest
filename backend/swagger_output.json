@@ -1,0 +1,494 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "REST API",
+    "description": ""
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/register": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Registers a new user and returns a jws token",
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body.data",
+            "description": "Username and password",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "xxLouisBidaultxx"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "leboss"
+                }
+              },
+              "required": [
+                "username",
+                "password"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User registered, token returned",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string",
+                  "example": "usertoken"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Logs the user",
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body.data",
+            "description": "Username and password",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "xxLouisBidaultxx"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "leboss"
+                }
+              },
+              "required": [
+                "username",
+                "password"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User logged in, returning token",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string",
+                  "example": "usertoken"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/confirmMail": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Confirms the user email",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "User registered, token returned",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string",
+                  "example": "usertoken"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth_api/users": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Gets every users informations",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/auth_api/limitedusers": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Gets every user username",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/auth_api/whoami": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Returns the user",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "User found, returning username and email",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "xxLouisBidaultxx"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "truc@email"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth_api/user/{email}": {
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Delete a user",
+        "description": "",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted"
+          }
+        }
+      }
+    },
+    "/auth_api/user/mail": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update the mail of a user",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Mail updated"
+          }
+        }
+      }
+    },
+    "/auth_api/user/password": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update the password of a user",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Password updated"
+          }
+        }
+      }
+    },
+    "/auth_api/user/pref": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update the preferences of a user",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Preferences updated"
+          }
+        }
+      }
+    },
+    "/auth_api/documents": {
+      "get": {
+        "tags": [
+          "Document"
+        ],
+        "summary": "Get all documents of the authentified user",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/auth_api/documents/{mail}": {
+      "get": {
+        "tags": [
+          "Document"
+        ],
+        "summary": "Get a document of a user",
+        "description": "",
+        "parameters": [
+          {
+            "name": "mail",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/auth_api/upload_doc": {
+      "post": {
+        "tags": [
+          "Document"
+        ],
+        "summary": "Upload a document",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/auth_api/files/{path}": {
+      "delete": {
+        "tags": [
+          "Document"
+        ],
+        "summary": "Delete a document",
+        "description": "",
+        "parameters": [
+          {
+            "name": "path",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/annonces": {
+      "get": {
+        "tags": [
+          "Annonce"
+        ],
+        "summary": "Get all annonces",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/annonce/{id}": {
+      "get": {
+        "tags": [
+          "Annonce"
+        ],
+        "summary": "Get an annonce",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/auth_api/annonce": {
+      "post": {
+        "tags": [
+          "Annonce"
+        ],
+        "summary": "Create a new annonce",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "titre": {
+                  "example": "any"
+                },
+                "description": {
+                  "example": "any"
+                },
+                "prix": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/auth_api/annonce/{id}": {
+      "delete": {
+        "tags": [
+          "Annonce"
+        ],
+        "summary": "Delete an annonce",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Annonce"
+        ],
+        "summary": "Update an annonce",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/auth_api/msg": {
+      "post": {
+        "tags": [
+          "Message"
+        ],
+        "summary": "Send a message",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/auth_api/msg/{username}": {
+      "get": {
+        "tags": [
+          "Message"
+        ],
+        "summary": "Get all messages of the authentified user",
+        "description": "",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}
