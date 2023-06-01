@@ -85,7 +85,6 @@ app.use(helmet())
 
 // Frontend code access in static mode
 // app.use('/frontend', express.static('../frontend'))
-app.use('/.well-known/pki-validation/BA3613A6E051E490F76E0EDDF57E8E2F.txt', express.static('BA3613A6E051E490F76E0EDDF57E8E2F.txt'))
 
 // Swagger Documentation
 const swaggerUi = require('swagger-ui-express')
