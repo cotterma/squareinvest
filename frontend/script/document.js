@@ -167,6 +167,15 @@ async function refresh() {
       false
     );
   }
+  for (let element of document.querySelectorAll(".delete-document")) {
+    element.addEventListener(
+      "click",
+      function () {
+        deleteDocument(element.getAttribute("path"));
+      },
+      false
+    );
+  }
 }
 
 async function deleteDocument(path) {
