@@ -292,7 +292,7 @@ app.post('*/annonce', upload.array('image'), async (req, res, next) => {
     const fileDestination = 'images/' + newFilename;
     const gcsFile = bucket.file(fileDestination);
     if(!gcsFile.exists()){
-      await compressImage(file);
+      // await compressImage(file);
       const uploadPromise = new Promise((resolve, reject) => {
         const stream = gcsFile.createWriteStream({
           metadata: {
