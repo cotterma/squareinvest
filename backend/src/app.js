@@ -72,6 +72,8 @@ const upload = multer({
   },
 });
 
+const imageminMozjpeg = import('imagemin-mozjpeg');
+const imageminPngquant = import('imagemin-pngquant');
 
 // Configure Express App Instance
 app.use(express.json({ limit: '50mb' }))
@@ -242,6 +244,34 @@ app.post('*/upload_doc', upload.single('document'), async (req, res, next) => {
   stream.end(req.file.buffer);
 })
 
+async function compressImage(file){
+  // Vérifier le format de l'image
+  if (file.mimetype === 'image/jpeg') {
+    // Compression pour les images JPEG avec imagemin-mozjpeg
+    const compressedImage = await imagemin.buffer(file.buffer, {
+      plugins: [
+        imageminMozjpeg({
+          quality: 80, // Ajustez la qualité de compression selon vos besoins (entre 0 et 100)
+        }),
+      ],
+    });
+
+    // Utiliser le fichier compressé dans la suite du traitement
+    file.buffer = compressedImage;
+  } else if (file.mimetype === 'image/png') {
+    // Compression pour les images PNG avec imagemin-pngquant
+    const compressedImage = await imagemin.buffer(file.buffer, {
+      plugins: [
+        imageminPngquant({
+          quality: [0.6, 0.8], // Ajustez la qualité de compression selon vos besoins (entre 0 et 1)
+        }),
+      ],
+    });
+
+    // Utiliser le fichier compressé dans la suite du traitement
+    file.buffer = compressedImage;
+  }
+}
 
 // Middleware that handle the send of images
 app.post('*/annonce', upload.array('image'), async (req, res, next) => {
@@ -261,30 +291,37 @@ app.post('*/annonce', upload.array('image'), async (req, res, next) => {
     const newFilename = file.originalname;
     const fileDestination = 'images/' + newFilename;
     const gcsFile = bucket.file(fileDestination);
+    if(!gcsFile.exists()){
+      await compressImage(file);
+      const uploadPromise = new Promise((resolve, reject) => {
+        const stream = gcsFile.createWriteStream({
+          metadata: {
+            contentType: file.mimetype,
+          },
+        });
 
-    const uploadPromise = new Promise((resolve, reject) => {
-      const stream = gcsFile.createWriteStream({
-        metadata: {
-          contentType: file.mimetype,
-        },
+        stream.on('error', (err) => {
+          console.error(err);
+          reject(new CodeError('Failed to upload the file', status.INTERNAL_SERVER_ERROR));
+        });
+
+        stream.on('finish', () => {
+          // Perform any necessary actions after file upload
+          // You can store the file path or update the document model here
+          req.filesPath.push(fileDestination);
+          resolve();
+        });
+
+        stream.end(file.buffer);
       });
 
-      stream.on('error', (err) => {
-        console.error(err);
-        reject(new CodeError('Failed to upload the file', status.INTERNAL_SERVER_ERROR));
-      });
+      uploadPromises.push(uploadPromise);
 
-      stream.on('finish', () => {
-        // Perform any necessary actions after file upload
-        // You can store the file path or update the document model here
-        req.filesPath.push(fileDestination);
-        resolve();
-      });
+    }
+    else{
+      req.filesPath.push(fileDestination);
+    }
 
-      stream.end(file.buffer);
-    });
-
-    uploadPromises.push(uploadPromise);
   }
 
   try {
