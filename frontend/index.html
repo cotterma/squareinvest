@@ -27,7 +27,7 @@
     <header>
       <nav id="menu">
         <div class="title">
-          <div id="title">Square<span id="title2">Invest</span></div>
+          <div id="title">square<span id="title2">invest</span></div>
         </div>
         <ul class="menu">
           <li id="home-main">Accueil</li>
@@ -43,13 +43,12 @@
         </ul>
 
         <ul class="connected hidden">
-          <li id="show-account"></li>
+          <!-- <li id="show-account"></li> -->
           <li id="account-main">Mon compte</li>
           <li id="logout">Déconnexion</li>
         </ul>
       </nav>
     </header>
-    <hr />
     <main>
       <!-- RESIDENCE INFO -->
       <div class="home-main">
@@ -57,11 +56,11 @@
         <div class="home">
           <div class="home-title">Localisation</div>
           <div class="home-more">Adresse : 16 rue de Mayencin, Saint Martin d'Hères
+
+            A proximité (100m à pied) de l'arrêt de tram "Mayencin Champ Roman" (ligne B)
             
-            A proximité (1min à pied) de l'arrêt de tram "Mayencin Champ Roman" (ligne B)
-
-            Très proche du campus universitaire et à 15mins du centre ville de Grenoble
-
+            Très proche du campus universitaire et à 20 minutes du centre ville de Grenoble
+            
             Nombreux commerces (boulangerie, pharmacie, supermarché) accessibles aux alentours
           </div>
         </div>
@@ -95,7 +94,6 @@
             Aucun frais d'agence immobilière, uniquement un forfait de 150€ exigible au titre des frais administratifs comprenant l'établissement complet du dossier de location avec rédaction du bail, de ses accessoires et incluant l'état des lieux d'entrée et de sortie
           </div>
         </div>
-        <hr>
         <div class="home grid">
           <a href="./images/entrance.jpg" target="_blank">
             <img src="./images/entrance.jpg" alt="Entrée résidence" class="wide-image"/>
@@ -123,36 +121,7 @@
             </form>
           </div>
         </div> -->
-        <div id="appartement-list">
-          <div class="appartement">
-            <div class="appartement-image">
-              <img src="./images/example.jpg" class="crop-image" />
-            </div>
-            <div class="appartement-content">
-              <div class="appartement-title">Appartement 111</div>
-              <hr class="appartement-hr" />
-              <div class="appartement-description">
-                Oui Toute charge comprise
-              </div>
-            </div>
-            <div class="appartement-infos">
-              <div class="appartement-price">500€/mois</div>
-            </div>
-          </div>
-          <div class="appartement">
-            <div class="appartement-image">
-              <img src="./images/example.jpg" class="crop-image" />
-            </div>
-            <div class="appartement-content">
-              <div class="appartement-title">Appartement 111</div>
-              <hr class="appartement-hr" />
-              <div class="appartement-description">Oui</div>
-            </div>
-            <div class="appartement-infos">
-              <div class="appartement-price">500€/mois</div>
-            </div>
-          </div>
-        </div>
+        <div id="appartement-list"></div>
       </div>
 
       <!-- MON COMPTE -->
@@ -286,11 +255,11 @@
         <div class="disconnected">
           Vous devez être connecté(e) pour déposer vos documents
         </div>
+        <div class="document-menutitle">
+          VOS DOCUMENTS
+        </div>
         <div id="document-list"></div>
         <div id="document-form">
-          <div class="form-group">
-            <label for="document">Sélectionner un document:</label>
-          </div>
           <input
             type="file"
             id="document"
@@ -374,6 +343,5 @@
         </div>
       </div>
     </main>
-    <footer></footer>
   </body>
 </html>

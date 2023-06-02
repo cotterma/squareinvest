@@ -1,8 +1,8 @@
 /* Styles for the general layout */
 
 body {
-  background-color: #ccc;
-  font-family: 'Lato', sans-serif;
+  background-color: #ffffff;
+  font-family: "Lato", sans-serif;
 }
 
 header {
@@ -11,21 +11,16 @@ header {
 
 .title {
   width: 100%;
+  font-size: 2em;
   font-weight: 1000;
-  display : flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  margin-right : 30px;
-}
-
-#title {
-  font-size: 2em;
-  color: #ffffff;
-  text-shadow: 2px 2px 2px #000;
+  font-family: "Montserrat", serif;
 }
 
 #title2 {
-  color: #440000;
+  color: #23527c;
 }
 
 main {
@@ -43,6 +38,7 @@ footer {
   width: 100%;
   display: flex;
   flex-direction: row;
+  margin: 20px 0;
 }
 
 .menu {
@@ -53,19 +49,15 @@ footer {
   min-width: 500px;
   justify-content: space-around;
   align-items: center;
-  background-color: #440000;
-  margin: 0;
-  padding: 0;
 }
 
 .menu li {
-  color: white;
   font-size: 1em;
   cursor: pointer;
 }
 
 .menu li:hover {
-  color: #ccc;
+  color: #23527c;
 }
 
 .account {
@@ -75,8 +67,6 @@ footer {
   width: 100%;
   justify-content: center;
   align-items: center;
-  margin: 0;
-  padding: 0;
 }
 
 .account li {
@@ -86,78 +76,98 @@ footer {
   cursor: pointer;
 }
 
+#register-main {
+  border: #23527c 7px solid;
+  border-radius: 15px;
+  background-color: #23527c;
+  color: white;
+}
+
+#register-main:hover {
+  border: black 7px solid;
+  background-color: black;
+}
+
 .connected {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   list-style-type: none;
   justify-content: center;
+  height: 100%;
+  align-items: center;
   width: 100%;
-  margin: 0;
-  padding: 0;
+}
+
+.connected li {
+  margin: 0 10px;
+  cursor: pointer;
 }
 
 #logout {
-  font-size: 0.8em;
-  color: blue;
-  cursor: pointer;
-}
-
-#account-main{
-  font-size: 0.8em;
-  color: blue;
-  cursor: pointer;
+  border: #23527c 7px solid;
+  border-radius: 15px;
+  background-color: #23527c;
+  color: white;
 }
 
 .disconnected {
   text-align: center;
   margin: 20px auto;
-  margin-top:0px;
+  margin-top: 0px;
+}
+
+.menu-mobile {
+  display: none;
 }
 
 /* HOME */
-.home{
-  display : flex;
-  flex-direction: column;
-  align-items: center;
+.home {
+  display: flex;
+  flex-direction: row;
   width: 80%;
   overflow: hidden;
-  margin: 30px auto;
+  margin: 70px auto;
 }
 
-.home-title{
+.home-title {
+  display: flex;
+  flex-direction: column;
   font-size: 2em;
   font-weight: 600;
-  margin-bottom: 30px;
+  width: 100%;
+  align-items: center;
+  font-family: "Roboto", serif;
 }
 
-.home-more{
-  text-align: center;
-  font-size : 1.1em;
+.home-more {
+  text-align: justify;
+  width: 100%;
+  font-size: 1.1em;
   white-space: pre-line;
-  margin-bottom : 30px;
+  margin-bottom: 30px;
   max-width: 60%;
 }
 
-.grid{
-  display:grid;
+.grid {
+  display: grid;
   grid-template-columns: repeat(2, 1fr);
   width: 100%;
-  margin-bottom : 30px;
+  margin-bottom: 30px;
 }
 
-.wide-image{
-  display : flex;
+.wide-image {
+  display: flex;
   align-items: center;
-  margin : 0 auto;
+  margin: 0 auto;
   width: 80%;
   overflow: hidden;
 }
 
-.crop-wide{
-  width : 100%;
-  display : flex;
-  height : 200px;
-  object-fit :cover;
+.crop-wide {
+  width: 100%;
+  display: flex;
+  height: 200px;
+  object-fit: cover;
 }
 
 /* APPARTEMENT */
@@ -246,7 +256,7 @@ footer {
   text-align: center;
   justify-content: center;
   align-items: center;
-  margin-top : 50px;
+  margin-top: 50px;
 }
 
 label {
@@ -303,15 +313,35 @@ button#login {
 
 .document-main {
   text-align: center;
-  display : flex;
-  margin : 30px auto;
+  display: flex;
+  margin: 30px auto;
   flex-direction: column;
 }
 
+.document-menutitle {
+  margin: 40px auto;
+  font-size: 2em;
+}
+
 #document-form {
+  display: flex;
+  flex-direction: column;
   margin: 50px auto;
 }
 
+#send-doc {
+  border: none;
+  outline: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+
+  background-color: #23527c;
+  border: 5px solid #23527c;
+  box-shadow: none;
+  color: white;
+}
 
 /* ADMIN */
 
@@ -372,10 +402,9 @@ button#login {
 }
 
 .messagerie-title {
+  margin: 40px auto;
   text-align: center;
-  margin: 0 auto;
-  font-size: 1.5em;
-  font-weight: 600;
+  font-size: 2em;
 }
 
 .messagerie-messages {
@@ -424,23 +453,24 @@ button#login {
 
 .received {
   width: fit-content;
-  background-color: #e4e3e3;
+  background-color: rgb(50, 0, 131);
   padding: 10px;
-  border: 1px solid black;
+  border: 1px solid rgb(50, 0, 131);
   border-radius: 10px;
-  margin: 10px 30px;
+  margin: 10px 10px;
   max-width: 40%;
+  color : white;
   word-wrap: break-word;
 }
 
 .sent {
   width: fit-content;
-  background-color: #440000;
+  background-color: #23527c;
   color: white;
   padding: 10px;
-  border: 1px solid black;
+  border: 1px solid #23527c;
   border-radius: 10px;
-  margin: 10px 30px;
+  margin: 10px 10px;
   align-self: flex-end;
   max-width: 40%;
   word-wrap: break-word;
@@ -475,7 +505,7 @@ button#login {
   margin-bottom: 30px;
   width: 20px;
   height: 20px;
-  cursor : pointer;
+  cursor: pointer;
 }
 
 .back-button::before {
@@ -490,7 +520,7 @@ button#login {
 }
 
 .back-button:hover::before {
-  border-color: #440000; /* Modifier la couleur de la flèche au survol */
+  border-color: #23527c; /* Modifier la couleur de la flèche au survol */
 }
 
 .hidden {
@@ -500,8 +530,7 @@ button#login {
 @media only screen and (max-width: 900px) {
   /* MENU */
   .title {
-    display : flex;
-    justify-content: center;
+    display: flex;
     font-size: 1.5em;
   }
 
@@ -510,113 +539,51 @@ button#login {
     flex-direction: column;
   }
 
-  #menu::after {
-    content: "---";
-    color: white;
-    width: 80%;
-    margin: 10px auto;
-    background-color: #440000;
-  }
-
-  #menu:hover::after {
-    display: none;
-  }
-
   .menu {
-    display: none;
-  }
-
-  #menu:hover .menu {
     display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-    list-style: none;
+    padding: 0;
     min-width: 0;
-  }
-
-  .menu li {
-    font-size: large;
-    padding: 10px 0px;
-    width: 100%;
-  }
-
-  .menu li:hover {
-    color: black;
+    flex-wrap: wrap;
   }
 
   .account {
-    display: none;
-  }
-
-  #menu:hover .account {
-    display: block;
-    list-style: none;
-    background-color: #440000;
-  }
-
-  .account li {
-    font-size: large;
-    padding: 10px 0px;
-    margin: 0;
+    display: flex;
     width: 100%;
-    color: white;
-  }
-
-  .account li:hover {
-    color: black;
-  }
-
-  #menu li:hover {
-    background-color: #ccc;
+    padding: 0;
   }
 
   .connected {
-    display: none;
-  }
-
-  #menu:hover .connected {
-    display: block;
-    list-style: none;
-    background-color: #440000;
-  }
-
-  #menu:hover #show-account {
-    display: none;
-  }
-
-  #menu:hover #logout {
-    padding: 10px 0px;
-    font-size: large;
-    color: white;
-  }
-
-  #menu:hover #account-main {
-    padding : 10px 0px;
-    font-size: large;
-    color :white;
-  }
-
-  #menu:hover .hidden {
-    display: none;
+    display: flex;
+    width: 100%;
+    padding: 0;
   }
 
   /* HOME */
-  .grid{
+  .home {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .home-more {
+    margin: 40px auto;
+  }
+
+  .grid {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
 
-  .crop-wide{
-    width : 100%;
-    display : flex;
-    height : 150px;
-    object-fit :cover;
+  .crop-wide {
+    width: 100%;
+    display: flex;
+    height: 150px;
+    object-fit: cover;
   }
 
   /* APPARTEMENTS */
-  .wide-image{
+  .wide-image {
     width: 100%;
   }
 
@@ -625,13 +592,13 @@ button#login {
   }
 
   .appartement {
-    display : flex;
+    display: flex;
     flex-wrap: wrap;
     max-height: 200px;
   }
-  
+
   .appartement-content {
-    width : auto;
+    width: auto;
     flex-grow: 1;
   }
 
@@ -643,7 +610,7 @@ button#login {
 
   .appartement-infos {
     margin: 20px auto;
-    display : flex;
+    display: flex;
     flex-direction: row;
     border: 1px solid black;
     width: 100%;
@@ -653,14 +620,14 @@ button#login {
 }
 
 @media only screen and (max-width: 400px) {
-  .appartement{
-    max-height : fit-content;
-    display : flex;
+  .appartement {
+    max-height: fit-content;
+    display: flex;
     flex-direction: column;
   }
 
-  .appartement-content{
-    display : flex;
-    margin-top : 10px
+  .appartement-content {
+    display: flex;
+    margin-top: 10px;
   }
 }
