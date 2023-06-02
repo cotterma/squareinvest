@@ -132,8 +132,8 @@ function showAccount(username) {
   account.classList.remove("hidden");
   const login = document.querySelector(".account");
   login.classList.add("hidden");
-  const account_main = document.querySelector("#show-account");
-  account_main.innerText = "Bonjour " + username;
+  // const account_main = document.querySelector("#show-account");
+  // account_main.innerText = "Bonjour " + username;
 
   const disconnected = document.querySelectorAll(".disconnected");
   for (let element of disconnected) {
