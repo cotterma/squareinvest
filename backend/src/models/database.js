@@ -2,17 +2,20 @@
 require("mandatoryenv").load(["DB"]);
 const { DB } = process.env;
 
-const Sequelize = require("sequelize");
-const db = new Sequelize({
+const connectionConfig = {
   dialect: "oracle",
   username: "ADMIN",
   password: "Ffe5#qp7h7&D?Z",
   dialectOptions: {
     connectString:
-      "(description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.eu-paris-1.oraclecloud.com))(connect_data=(service_name=gacec186cce94f5_squareinvestdb_medium.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))",
+      "(description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.eu-paris-1.oraclecloud.com))(connect_data=(service_name=gacec186cce94f5_squareinvestdb_high.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))",
+    walletLocation: "./Wallet_squareinvestDB",
+    walletPassword: "Macpcgaming24",
   },
-  logging: (...msg) => console.log(msg),
-});
+};
+
+const Sequelize = require("sequelize");
+const db = new Sequelize(connectionConfig);
 
 db.authenticate()
   .then(() => {
