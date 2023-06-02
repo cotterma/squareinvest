@@ -20,6 +20,7 @@ const imageModel = require('./models/images.js')
 const { Storage } = require('@google-cloud/storage');
 const fs = require('fs');
 const admins = require('./admins.js')
+const imagemin = import('imagemin');
 
 // Instantiate an Express Application
 const app = express()
@@ -291,7 +292,8 @@ app.post('*/annonce', upload.array('image'), async (req, res, next) => {
     const newFilename = file.originalname;
     const fileDestination = 'images/' + newFilename;
     const gcsFile = bucket.file(fileDestination);
-    if(!gcsFile.exists()){
+    const fileExists = await gcsFile.exists();
+    if(!fileExists[0]){
       // await compressImage(file);
       const uploadPromise = new Promise((resolve, reject) => {
         const stream = gcsFile.createWriteStream({
