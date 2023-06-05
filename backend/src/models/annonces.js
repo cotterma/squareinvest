@@ -8,15 +8,15 @@ const annonces = db.define('annonces', {
         autoIncrement: true
     },
     titre : {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false
     },
     description : {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false
     },
     prix : {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
         allowNull: false
     },
 }, { timestamps: false })
