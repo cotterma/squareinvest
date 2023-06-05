@@ -119,6 +119,7 @@ async function setAnnonces(){
     const image = document.createElement("img");
     image.setAttribute("src", `${back + "/" + element.path}`);
     image.classList.add("crop-image");
+    image.setAttribute("load", "lazy");
     announce_image.appendChild(image);
 
     const announce_content = document.createElement("div");
@@ -242,13 +243,17 @@ async function displayAnnonce(id){
   announce_content.appendChild(announce_gallery);
 
   for (let element of annonce.data.paths) {
+    const a = document.createElement("a");
+    a.setAttribute("href", `${back + "/" + element}`);
+    a.setAttribute("target", "_blank");
     const image = document.createElement("img");
     image.setAttribute("src", `${back + "/" + element}`);
     image.classList.add("slide");
     image.classList.add("hidden");
-    announce_gallery.appendChild(image);
+    a.appendChild(image);
+    announce_gallery.appendChild(a);
   }
-  announce_gallery.firstChild.classList.remove("hidden");
+  announce_gallery.firstChild.firstChild.classList.remove("hidden");
 
   const prev_arrow= document.createElement("div");
   prev_arrow.setAttribute("id", "prev-arrow");

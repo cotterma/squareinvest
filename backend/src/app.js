@@ -20,7 +20,9 @@ const imageModel = require('./models/images.js')
 const { Storage } = require('@google-cloud/storage');
 const fs = require('fs');
 const admins = require('./admins.js')
-const imagemin = import('imagemin');
+const sharp = require('sharp');
+const { PDFDocument } = require('pdf-lib');
+
 
 // Instantiate an Express Application
 const app = express()
@@ -72,9 +74,6 @@ const upload = multer({
     fileSize: 5 * 1024 * 1024, // no larger than 5mb, you can change as needed.
   },
 });
-
-const imageminMozjpeg = import('imagemin-mozjpeg');
-const imageminPngquant = import('imagemin-pngquant');
 
 // Configure Express App Instance
 app.use(express.json({ limit: '50mb' }))
@@ -225,6 +224,9 @@ app.post('*/upload_doc', upload.single('document'), async (req, res, next) => {
   const newFilename = Date.now() + originalExtension;
   const file = bucket.file('files/' + newFilename);
 
+  // Compress the PDF
+  // const compressedBuffer = await compressPDF(req.file.buffer);
+
   const stream = file.createWriteStream({
     metadata: {
       contentType: req.file.mimetype,
@@ -242,32 +244,42 @@ app.post('*/upload_doc', upload.single('document'), async (req, res, next) => {
     next();
   });
 
-  stream.end(req.file.buffer);
+  stream.end(compressedBuffer);
 })
+
+// async function compressPDF(buffer) {
+//   const pdfDoc = await PDFDocument.load(buffer);
+//   const pages = pdfDoc.getPages();
+//   const compressionQuality = 0.5;
+//   // Iterate over each page of the PDF
+//   for (let i = 0; i < pages.length; i++) {
+//     const page = pages[i];
+//     // Compress the images on the page
+//     page.getResources().map.Images.forEach((image) => {
+//       image.xObject.compress(compressionQuality);
+//     });
+//   }
+
+//   const compressedBuffer = await pdfDoc.save();
+
+//   return compressedBuffer;
+// }
 
 async function compressImage(file){
   // Vérifier le format de l'image
   if (file.mimetype === 'image/jpeg') {
     // Compression pour les images JPEG avec imagemin-mozjpeg
-    const compressedImage = await imagemin.buffer(file.buffer, {
-      plugins: [
-        imageminMozjpeg({
-          quality: 80, // Ajustez la qualité de compression selon vos besoins (entre 0 et 100)
-        }),
-      ],
-    });
+    const compressedImage = await sharp(file.buffer)
+    .jpeg({ quality: 80 }) // Adjust the compression quality as needed (between 0 and 100)
+    .toBuffer();
 
     // Utiliser le fichier compressé dans la suite du traitement
     file.buffer = compressedImage;
   } else if (file.mimetype === 'image/png') {
     // Compression pour les images PNG avec imagemin-pngquant
-    const compressedImage = await imagemin.buffer(file.buffer, {
-      plugins: [
-        imageminPngquant({
-          quality: [0.6, 0.8], // Ajustez la qualité de compression selon vos besoins (entre 0 et 1)
-        }),
-      ],
-    });
+    const compressedImage = await sharp(file.buffer)
+    .png({ quality: 80 }) // Adjust the compression quality as needed (between 0 and 100)
+    .toBuffer();
 
     // Utiliser le fichier compressé dans la suite du traitement
     file.buffer = compressedImage;
@@ -294,7 +306,7 @@ app.post('*/annonce', upload.array('image'), async (req, res, next) => {
     const gcsFile = bucket.file(fileDestination);
     const fileExists = await gcsFile.exists();
     if(!fileExists[0]){
-      // await compressImage(file);
+      await compressImage(file);
       const uploadPromise = new Promise((resolve, reject) => {
         const stream = gcsFile.createWriteStream({
           metadata: {
