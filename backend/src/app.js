@@ -244,7 +244,7 @@ app.post('*/upload_doc', upload.single('document'), async (req, res, next) => {
     next();
   });
 
-  stream.end(compressedBuffer);
+  stream.end(req.file.buffer);
 })
 
 // async function compressPDF(buffer) {
