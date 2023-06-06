@@ -3,6 +3,7 @@ const has = require('has-keys')
 const annonceModel = require('../models/annonces.js')
 const imageModel = require('../models/images.js')
 const admins = require('../admins.js')
+const db = require('../models/database.js')
 
 module.exports = {
     async getAnnonces (req, res) {
@@ -47,8 +48,25 @@ module.exports = {
         }
 
         // Create the annonce entry in the database
-        const annonce = await annonceModel.create({ titre, description, prix });
-        const id_annonce = annonce.id;
+        const query = `
+            INSERT INTO ADMIN."annonces" (
+                "titre",
+                "description",
+                "prix"
+            ) VALUES (
+                :TITRE,
+                :DESCRIPTION,
+                :PRIX
+            );
+        `;
+        
+        await db.query(query, {
+            replacements: { TITRE : titre, DESCRIPTION : description, PRIX : prix },
+          });
+          
+        const annonce = await db.query(`SELECT MAX("id") AS max_id FROM ADMIN."annonces"`);
+        const id_annonce = annonce[0][0].MAX_ID;
+        console.log(annonce, annonce[0][0])
 
         for (let element of paths) {
             const image = await imageModel.create({ id_annonce, path : element });
