@@ -193,7 +193,7 @@ let jsonVerifFunction = async (req, res, next) => {
 
     let bodyData
     try { 
-        bodyData = JSON.parse(req.body.data, 'utf8') 
+        bodyData = JSON.parse(req.body.data) 
     } 
     catch(e) {
         throw new CodeError('Request body is not a valid JSON', status.BAD_REQUEST)
