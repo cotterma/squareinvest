@@ -193,7 +193,7 @@ let jsonVerifFunction = async (req, res, next) => {
 
     let bodyData
     try { 
-        bodyData = JSON.parse(req.body.data) 
+        bodyData = JSON.parse(req.body.data, 'utf8') 
     } 
     catch(e) {
         throw new CodeError('Request body is not a valid JSON', status.BAD_REQUEST)
@@ -209,9 +209,14 @@ app.post(['/register', '/login', '/confirmMail','*/msg'], async (req, res, next)
 })
 
 // Same for put
-// app.put('*', async (req, res, next) => {
-//     await jsonVerifFunction(req, res, next)
-// })
+app.put(['*/user/*'], async (req, res, next) => {
+    await jsonVerifFunction(req, res, next)
+})
+
+app.put('*/annonce/*', upload.none(), function (req, res, next) {
+  // Access the form data fields via req.body
+  next()
+});
 
 // Middleware that handle the send of documents
 app.post('*/upload_doc', upload.single('document'), async (req, res, next) => {

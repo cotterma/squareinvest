@@ -338,15 +338,16 @@ function showEdit(element){
 function editAnnonce(){
   const id = document.querySelector("#submit-edit").getAttribute("id_annonce");
   const url = back + "/auth_api/annonce/" + id;
-  const body = new URLSearchParams();
-  body.append("data", `{"titre" : "${document.querySelector("#title-edit").value}", "description" : "${document.querySelector("#description-edit").value}", "prix" : "${document.querySelector("#info-edit").value}"}`);
+  const formData = new FormData();
+  formData.append("titre", document.querySelector("#title-edit").value);
+  formData.append("description", document.querySelector("#description-edit").value);
+  formData.append("prix", document.querySelector("#info-edit").value);
   fetch(url, {
     method: "PUT",
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
       "x-access-token": localStorage.getItem("token"),
     },
-    body
+    body : formData
   })
     .then((response) => {
       // Traiter la réponse du serveur

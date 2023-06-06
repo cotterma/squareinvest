@@ -97,7 +97,7 @@ module.exports = {
         // #swagger.tags = ['Annonce']
         // #swagger.summary = 'Update an annonce'
         const { id } = req.params;
-        const { titre, description, prix } = req.data;
+        const { titre, description, prix } = req.body;
 
         //VERIFY USER IS ADMIN
         if (!admins.includes(req.authMail)){
@@ -105,10 +105,8 @@ module.exports = {
         }
 
         // Update the annonce entry in the database
-        const [affectedRows] = await annonceModel.update(
-            { titre, description, prix },
-            { where: { id } }
-        );
+        const query = `UPDATE ADMIN."annonces" SET "titre" = :titre, "description" = :description, "prix" = :prix WHERE "id" = :id`;
+        const [affectedRows] = await db.query(query, {replacements: {titre : titre, description : description, prix : prix, id : id}});
 
         if (affectedRows === 0) {
             // No rows were updated, the entry may not exist
