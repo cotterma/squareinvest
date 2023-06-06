@@ -209,9 +209,9 @@ app.post(['/register', '/login', '/confirmMail','*/msg'], async (req, res, next)
 })
 
 // Same for put
-app.put('*', async (req, res, next) => {
-    await jsonVerifFunction(req, res, next)
-})
+// app.put('*', async (req, res, next) => {
+//     await jsonVerifFunction(req, res, next)
+// })
 
 // Middleware that handle the send of documents
 app.post('*/upload_doc', upload.single('document'), async (req, res, next) => {
