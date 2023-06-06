@@ -594,12 +594,17 @@ button#login {
   .appartement {
     display: flex;
     flex-wrap: wrap;
-    max-height: 200px;
+    max-height: fit-content;
+    overflow: hidden;
+  }
+
+  .appartement-image{
+    width: 100%;
+    margin-bottom: 20px;
   }
 
   .appartement-content {
-    width: auto;
-    flex-grow: 1;
+    width : 100%;
   }
 
   .appartement-title {
@@ -609,25 +614,12 @@ button#login {
   }
 
   .appartement-infos {
-    margin: 20px auto;
+    margin-top : 20px;
     display: flex;
     flex-direction: row;
     border: 1px solid black;
     width: 100%;
     justify-content: center;
     align-items: center;
-  }
-}
-
-@media only screen and (max-width: 400px) {
-  .appartement {
-    max-height: fit-content;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .appartement-content {
-    display: flex;
-    margin-top: 10px;
   }
 }
