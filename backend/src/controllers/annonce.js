@@ -66,7 +66,6 @@ module.exports = {
           
         const annonce = await db.query(`SELECT MAX("id") AS max_id FROM ADMIN."annonces"`);
         const id_annonce = annonce[0][0].MAX_ID;
-        console.log(annonce, annonce[0][0])
 
         for (let element of paths) {
             const image = await imageModel.create({ id_annonce, path : element });
