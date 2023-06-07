@@ -4,6 +4,7 @@ const messageModel = require('../models/messages.js')
 const userModel = require('../models/users.js')
 const {Op} = require('sequelize')
 const nodemailer = require('nodemailer');
+const db = require('../models/database.js')
 
 
 const transporter = nodemailer.createTransport({
@@ -29,8 +30,25 @@ module.exports = {
       const expediteur_username = expediteur.username;
 
       const destinataire_retrieved = await userModel.findOne({ where: { username: destinataire }})
-      const new_msg = await messageModel.create({ expediteur: expediteur_username, destinataire: destinataire, contenu: contenu, time: time });
-      
+      // Create the message entry in the database
+      const query = `
+        INSERT INTO ADMIN."messages" (
+            "expediteur",
+            "destinataire",
+            "contenu",
+            "time"
+        ) VALUES (
+            :EXPEDITEUR,
+            :DESTINATAIRE,
+            :CONTENU,
+            :TIME
+        );
+      `;
+
+      await db.query(query, {
+        replacements: { EXPEDITEUR : expediteur_username, DESTINATAIRE : destinataire, CONTENU : contenu, TIME : time},
+      });
+
       if (destinataire_retrieved.msgMail == true){
         const mailOptions = {
           from: `${email}`,
