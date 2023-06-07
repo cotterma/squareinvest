@@ -21,8 +21,8 @@ module.exports = {
       // #swagger.tags = ['Message']
       // #swagger.summary = 'Send a message'
       const email = req.authMail; // Assuming the authenticated username is available in req.authMail
-      const destinataire = req.data.destinataire;
-      const contenu = req.data.contenu;
+      const destinataire = req.body.destinataire;
+      const contenu = req.body.contenu;
 
       const expediteur = await userModel.findOne({ where: {email: email}});
       const expediteur_username = expediteur.username;

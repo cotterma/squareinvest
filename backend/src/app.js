@@ -204,9 +204,14 @@ let jsonVerifFunction = async (req, res, next) => {
 }
 
 // Middleware that parses the JSON data field of the request
-app.post(['/register', '/login', '/confirmMail','*/msg'], async (req, res, next) => {
+app.post(['/register', '/login', '/confirmMail'], async (req, res, next) => {
     await jsonVerifFunction(req, res, next)
 })
+
+app.post('*/msg', upload.none(), function (req, res, next) {
+  // Access the form data fields via req.body
+  next()
+});
 
 // Same for put
 app.put(['*/user/*'], async (req, res, next) => {

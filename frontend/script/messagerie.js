@@ -1,4 +1,4 @@
-import {back} from "./config.js";
+import { back } from "./config.js";
 let socket = null;
 let current_user = null;
 
@@ -40,21 +40,21 @@ async function getMessages(username) {
       "x-access-token": token,
     },
   })
-  .then((response) => {
-    if (response.ok) {
-      return response.json();
-    } else {
-      return response.json().then((error) => {
-        throw error;
-      });
-    }
-  })
-  .then((json) => {
-    return json;
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        return response.json().then((error) => {
+          throw error;
+        });
+      }
+    })
+    .then((json) => {
+      return json;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   return messages;
 }
 
@@ -67,18 +67,15 @@ async function sendMessage() {
   message_input.value = "";
   const url = back + "/auth_api/msg";
   const token = localStorage.getItem("token");
-  const body = new URLSearchParams();
-  body.append(
-    "data",
-    `{"destinataire": "${username}", "contenu": "${message}", "time": "${Date.now()}"}`
-  );
+  const formData = new FormData();
+  formData.append("destinataire", username);
+  formData.append("contenu", message);
   await fetch(url, {
     method: "POST",
     headers: {
-      "content-type": "application/x-www-form-urlencoded",
       "x-access-token": token,
     },
-    body,
+    body: formData,
   })
     .then((response) => {
       if (response.ok) {
@@ -90,24 +87,23 @@ async function sendMessage() {
       });
     })
     .then((json) => {
-      return json;
+      const messageObj = {
+        type: "msg",
+        data: {
+          token: token,
+          destinataire: username,
+          contenu: message,
+        },
+      };
+
+      const messages = document.querySelector("#messagerie-messages-list");
+      addMessage(messageObj.data, messages, username);
+      scrollToBottom();
     })
     .catch((error) => {
       console.log(error);
     });
 
-  const messageObj = {
-    type : "msg",
-    data : {
-      token : localStorage.getItem("token"),
-      destinataire: username,
-      contenu: message,
-    }
-  };
-
-  const messages = document.querySelector("#messagerie-messages-list");
-  addMessage(messageObj.data, messages, username);
-  scrollToBottom();
   // Send the message as a JSON string
   // socket.send(JSON.stringify(messageObj));
 }
@@ -133,13 +129,13 @@ async function showConversation(username) {
   send_button.setAttribute("receiver", username);
 
   for (let message of messages_retrieved.data) {
-    addMessage(message , messages, username);
+    addMessage(message, messages, username);
   }
   current_user = username;
   scrollToBottom();
 }
 
-function handleReceived(message){
+function handleReceived(message) {
   if (current_user === message.expediteur) {
     const messages = document.querySelector("#messagerie-messages-list");
     addMessage(message, messages, message.expediteur);
@@ -147,7 +143,7 @@ function handleReceived(message){
   }
 }
 
-function addMessage(message, messages, username){
+function addMessage(message, messages, username) {
   const div = document.createElement("div");
   if (message.expediteur === username) {
     div.classList.add("received");
@@ -185,7 +181,9 @@ function miseEnPlace() {
   if (localStorage.getItem("token")) {
     setContacts();
 
-    const back_button = document.querySelector(".messagerie-messages .back-button");
+    const back_button = document.querySelector(
+      ".messagerie-messages .back-button"
+    );
     const message = document.querySelector("#send-message");
     back_button.addEventListener(
       "click",
@@ -210,7 +208,7 @@ function miseEnPlace() {
 
     // socket.addEventListener('open', () => {
     //   console.log('Connected to WebSocket server.');
-    
+
     //   const messageObj = {
     //     type : "connection",
     //     data : {
@@ -230,13 +228,13 @@ function miseEnPlace() {
     //     handleReceived(message.data)
     //   }
     // })
-    
+
     // socket.addEventListener('close', () => {
     //   console.log('Disconnected from WebSocket server.');
     // });
   }
 }
 
-export {socket}
+export { socket };
 
 window.addEventListener("load", miseEnPlace, false);
