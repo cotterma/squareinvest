@@ -94,6 +94,7 @@ module.exports = {
             },
           ],
         },
+        order: [['id', 'ASC']]
       });
   
       res.status(200).json({ message: "Retrieving all the messages", data: messages });
