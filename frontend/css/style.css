@@ -142,7 +142,8 @@ footer {
 .home-more {
   text-align: justify;
   width: 100%;
-  font-size: 1.1em;
+  font-size: 1.2em;
+  font-weight: 600;
   white-space: pre-line;
   margin-bottom: 30px;
   max-width: 60%;
@@ -186,6 +187,7 @@ footer {
 }
 
 .appartement {
+  position : relative;
   display: flex;
   flex-direction: row;
   margin: 20px;

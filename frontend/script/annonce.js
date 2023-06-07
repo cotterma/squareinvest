@@ -80,7 +80,11 @@ async function getAnnonces() {
     return annonces;
 }
 
-async function getAnnonce(id) {
+async function getAnnonce(element) {
+  const loading = document.createElement("div");
+  loading.setAttribute("id", "loading-spinner");
+  element.append(loading)
+  const id = element.getAttribute("id");
   const url = back + "/annonce/" + id;
   const annonce = await fetch(url, {
     method: "GET",
@@ -95,6 +99,7 @@ async function getAnnonce(id) {
         });
       }
     }).then((json) => {
+        element.removeChild(loading);
         return json;
       }
     )
@@ -214,8 +219,8 @@ function deleteAnnonce(id){
     });
 }
 
-async function displayAnnonce(id){
-  const annonce = await getAnnonce(id);
+async function displayAnnonce(element){
+  const annonce = await getAnnonce(element);
   const selected_annonce = document.querySelector(".selected-annonce");
   let main = document.querySelector("main");
   let contents = main.childNodes;
@@ -374,7 +379,7 @@ async function miseEnPlace() {
     element.addEventListener(
       "click",
       function () {
-        displayAnnonce(element.getAttribute("id"));
+        displayAnnonce(element);
       },
       false
     );
