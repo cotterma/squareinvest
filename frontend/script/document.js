@@ -1,6 +1,21 @@
 import {back} from "./config.js";
 
+function handleError(error) {
+  let message = error.message;
+  let error_div = document.querySelector("#error-document");
+  if (message == "You can't upload more than 4 documents"){
+    error_div.innerText = "Vous ne pouvez pas envoyer plus de 4 documents";
+  }
+  if (message == "Aucun fichier sélectionné"){
+    error_div.innerText = "Aucun fichier sélectionné";
+  }
+  error_div.style.color = "red";
+}
+
 function sendDoc() {
+  const error = document.querySelector("#error-document");
+  error.innerText = "Envoi de document en cours...";
+  error.style.color = "green";
   var fileInput = document.getElementById("document");
   var file = fileInput.files[0]; // Récupérer le fichier sélectionné
   if (file) {
@@ -21,7 +36,7 @@ function sendDoc() {
       .then((response) => {
         // Traiter la réponse du serveur
         if (response.ok) {
-          console.log("Document envoyé avec succès");
+          error.innerText = "Document envoyé avec succès";
           refresh();
         } else {
           return response.json().then((error) => {
@@ -32,12 +47,15 @@ function sendDoc() {
       .catch((error) => {
         // Gérer les erreurs
         console.log(error);
+        handleError(error);
       });
 
     // À partir d'ici, vous pouvez effectuer la requête AJAX ou envoyer les données via fetch()
     // en utilisant l'URL et la méthode appropriées, en utilisant formData comme corps de la requête.
   } else {
-    console.log("Aucun fichier sélectionné");
+    const error_div = document.querySelector("#error-document");
+    error_div.innerText = "Aucun fichier sélectionné";
+    error_div.style.color = "red";
   }
 }
 

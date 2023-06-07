@@ -188,11 +188,16 @@ footer {
 .appartement {
   display: flex;
   flex-direction: row;
-  margin: 10px;
+  margin: 20px;
   padding: 10px;
   background-color: #e4e3e3;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   max-height: 150px;
+  cursor: pointer;
+}
+
+.appartement:hover {
+  background-color: #d1d0d0;
 }
 
 .appartement-image {
