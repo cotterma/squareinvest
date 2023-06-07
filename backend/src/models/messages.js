@@ -25,7 +25,7 @@ const messages = db.define('messages', {
 		}
 	},
 	contenu :{
-		type: Sequelize.STRING,
+		type: Sequelize.TEXT,
 		allowNull: false
 	},
 	time :{

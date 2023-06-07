@@ -102,7 +102,6 @@ async function sendMessage() {
       token : localStorage.getItem("token"),
       destinataire: username,
       contenu: message,
-      time: Date.now().toString()
     }
   };
 

@@ -20,17 +20,17 @@ module.exports = {
     async sendMsg (req, res) {
       // #swagger.tags = ['Message']
       // #swagger.summary = 'Send a message'
-
       const email = req.authMail; // Assuming the authenticated username is available in req.authMail
       const destinataire = req.data.destinataire;
       const contenu = req.data.contenu;
-      const time = req.data.time;
 
       const expediteur = await userModel.findOne({ where: {email: email}});
       const expediteur_username = expediteur.username;
 
       const destinataire_retrieved = await userModel.findOne({ where: { username: destinataire }})
       // Create the message entry in the database
+      const date = new Date();
+      const formatDate = date.toISOString(); // Convert to ISO 8601 format
       const query = `
         INSERT INTO ADMIN."messages" (
             "expediteur",
@@ -41,12 +41,12 @@ module.exports = {
             :EXPEDITEUR,
             :DESTINATAIRE,
             :CONTENU,
-            :TIME
+            TO_TIMESTAMP_TZ(:TIME, 'YYYY-MM-DD"T"HH24:MI:SS.FF3"Z"')
         );
       `;
 
       await db.query(query, {
-        replacements: { EXPEDITEUR : expediteur_username, DESTINATAIRE : destinataire, CONTENU : contenu, TIME : time},
+        replacements: { EXPEDITEUR : expediteur_username, DESTINATAIRE : destinataire, CONTENU : contenu, TIME : formatDate},
       });
 
       if (destinataire_retrieved.msgMail == true){
