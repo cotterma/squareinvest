@@ -13,3 +13,10 @@
   @keyframes spin {
     to { transform: rotate(360deg); }
   }
+
+  @media only screen and (max-width: 1240px) {
+    #loading-spinner {
+      top: 40%;
+      left : 47%;
+    }
+  }
