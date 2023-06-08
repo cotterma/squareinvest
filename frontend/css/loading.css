@@ -1,7 +1,8 @@
 #loading-spinner {
     position: absolute;
-    top: 35%;
+    top: 50%;
     left: 50%;
+    transform: translate(-50%, -50%);
     width: 40px;
     height: 40px;
     border: 4px solid #ccc;
@@ -11,12 +12,5 @@
   }
   
   @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-
-  @media only screen and (max-width: 1240px) {
-    #loading-spinner {
-      top: 40%;
-      left : 47%;
-    }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
   }
