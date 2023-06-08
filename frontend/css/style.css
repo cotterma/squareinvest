@@ -722,6 +722,13 @@ button#login {
     margin-bottom: 20px;
   }
 
+  .crop-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    object-position: 50% 50%;
+  }
+
   .appartement-content {
     width : 100%;
   }
