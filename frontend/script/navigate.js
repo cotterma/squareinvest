@@ -38,6 +38,13 @@ function miseEnPlace() {
       resetSlide();
     }
   );
+  document.querySelector("#click-appart").addEventListener(
+    "click",
+    function () {
+      switchMenu("appartement-main");
+      resetSlide();
+    }
+  );
 }
 
 window.addEventListener("load", miseEnPlace, false);
