@@ -219,6 +219,13 @@ function deleteAnnonce(id){
     });
 }
 
+function back_appart(){
+  const selected_annonce = document.querySelector(".selected-annonce");
+  selected_annonce.classList.add("hidden");
+  const main = document.querySelector(".appartement-main");
+  main.classList.remove("hidden");
+}
+
 async function displayAnnonce(element){
   const annonce = await getAnnonce(element);
   const selected_annonce = document.querySelector(".selected-annonce");
@@ -233,6 +240,10 @@ async function displayAnnonce(element){
   }
   selected_annonce.classList.remove("hidden");
   selected_annonce.innerHTML = "";
+  const back_button = document.createElement("div");
+  back_button.classList.add("back-button");
+  selected_annonce.appendChild(back_button);
+  back_button.addEventListener("click", back_appart);
 
   const announce_title = document.createElement("div");
   announce_title.classList.add("selected-title");
