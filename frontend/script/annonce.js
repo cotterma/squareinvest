@@ -239,6 +239,7 @@ async function displayAnnonce(element){
     }
   }
   selected_annonce.classList.remove("hidden");
+  const form  = document.querySelector("#contact").cloneNode(true);
   selected_annonce.innerHTML = "";
   const back_button = document.createElement("div");
   back_button.classList.add("back-button");
@@ -286,6 +287,7 @@ async function displayAnnonce(element){
   announce_description.innerText = annonce.data.description;
   announce_content.appendChild(announce_description);
 
+  selected_annonce.appendChild(form);
   setGallery()
 }
 

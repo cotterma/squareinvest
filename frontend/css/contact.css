@@ -1,0 +1,20 @@
+#contact{
+    background-color: #EFF5FB;
+    margin-top : 60px;
+    width : 60%;
+    justify-content: center;
+}
+
+#contact p {
+    display : flex;
+    font-size: 1.5em;
+    font-weight: 600;
+    justify-content: center;
+}
+
+#formcontact{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin: 0 auto;
+}
