@@ -12,6 +12,7 @@
     <link type="text/css" href="./css/loading.css" rel="StyleSheet" />
     <link type="text/css" href="./css/icon.css" rel="StyleSheet" />
     <link type="text/css" href="./css/contact.css" rel="StyleSheet" />
+    <link type="text/css" href="./css/espace.css" rel="StyleSheet" />
     <script src="./script/navigate.js" type="module"></script>
     <script src="./script/account.js" type="module"></script>
     <script src="./script/document.js" type="module"></script>
@@ -19,6 +20,7 @@
     <script src="./script/gallery.js" type="module"></script>
     <script src="./script/messagerie.js" type="module"></script>
     <script src="./script/demande.js" type="module"></script>
+    <script src="./script/admin.js" type="module"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -332,39 +334,44 @@
 
       <!-- ADMIN PANEL -->
       <div class="admin-main hidden">
-        <div class="admin-title">AJOUTER UNE ANNONCE</div>
-        <div id="ajout-annonce">
-          <input
-            type="text"
-            id="titre-annonce"
-            placeholder="Titre de l'annonce"
-          />
-          <textarea id="description-annonce"> </textarea>
-          <input
-            type="text"
-            id="prix-annonce"
-            placeholder="Prix de l'annonce"
-          />
-          <input type="file" id="image" multiple="multiple" />
-          <button id="send-annonce">Envoyer annonce</button>
+        <div class="espace-menu">
+          <button id="espace-admin">ESPACE ADMINISTRATEUR</button>
         </div>
-        <div class="admin-title">LISTE DES ANNONCES</div>
-        <div id="liste-annonces"></div>
-        <div class="admin-title">LISTE DES UTILISATEURS</div>
-        <div id="liste-utilisateurs">
-          <div class="utilisateur">
-            <div class="utilisateur-title">Utilisateur 1</div>
-            <button class="utilisateur-doc">Document</button>
-            <button class="utilisateur-doc">Document</button>
-            <button class="utilisateur-delete">Supprimer utilisateur</button>
-            <hr class="utilisateur-hr" />
+        <div id="admin-menu" class="hidden">
+          <div class="admin-title">AJOUTER UNE ANNONCE</div>
+          <div id="ajout-annonce">
+            <input
+              type="text"
+              id="titre-annonce"
+              placeholder="Titre de l'annonce"
+            />
+            <textarea id="description-annonce"> </textarea>
+            <input
+              type="text"
+              id="prix-annonce"
+              placeholder="Prix de l'annonce"
+            />
+            <input type="file" id="image" multiple="multiple" />
+            <button id="send-annonce">Envoyer annonce</button>
           </div>
-          <div class="utilisateur">
-            <div class="utilisateur-title">Utilisateur 1</div>
-            <button class="utilisateur-doc">Document</button>
-            <button class="utilisateur-doc">Document</button>
-            <button class="utilisateur-delete">Supprimer utilisateur</button>
-            <hr class="utilisateur-hr" />
+          <div class="admin-title">LISTE DES ANNONCES</div>
+          <div id="liste-annonces"></div>
+          <div class="admin-title">LISTE DES UTILISATEURS</div>
+          <div id="liste-utilisateurs">
+            <div class="utilisateur">
+              <div class="utilisateur-title">Utilisateur 1</div>
+              <button class="utilisateur-doc">Document</button>
+              <button class="utilisateur-doc">Document</button>
+              <button class="utilisateur-delete">Supprimer utilisateur</button>
+              <hr class="utilisateur-hr" />
+            </div>
+            <div class="utilisateur">
+              <div class="utilisateur-title">Utilisateur 1</div>
+              <button class="utilisateur-doc">Document</button>
+              <button class="utilisateur-doc">Document</button>
+              <button class="utilisateur-delete">Supprimer utilisateur</button>
+              <hr class="utilisateur-hr" />
+            </div>
           </div>
         </div>
       </div>

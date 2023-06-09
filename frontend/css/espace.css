@@ -1,0 +1,33 @@
+.espace-menu{
+    display : flex;
+    flex-direction : column;
+    height : 200px;
+    justify-content : center;
+    align-items : center;
+}
+
+#espace-admin{
+    overflow: hidden;
+    border : none;
+    padding : 10px;
+    background-color: #23527c;
+    color : white;
+    cursor : pointer;
+}
+
+#espace-admin:hover{
+    background-color: #1a3e5c;
+}
+
+.auth-field{
+    display : flex;
+    flex-direction : column;
+}
+
+.auth-valid{
+    display : flex;
+}
+
+.hidden{
+    display :none;
+}
