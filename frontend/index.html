@@ -18,7 +18,7 @@
     <script src="./script/annonce.js" type="module"></script>
     <script src="./script/gallery.js" type="module"></script>
     <script src="./script/messagerie.js" type="module"></script>
-
+    <script src="./script/demande.js" type="module"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -41,7 +41,7 @@
           <li id="appartement-main">Appartements</li>
           <li id="document-main" class="hidden">Documents</li>
           <li id="messagerie-main" class="hidden">Messagerie</li>
-          <li id="admin-main" class="hidden">Administration</li>
+          <li id="admin-main" >Administration</li>
         </ul>
 
         <ul class="account hidden">
@@ -204,12 +204,14 @@
           <p>Informations - Canditatures</p>
           <p>Délai de réponse moyen: 24-48h</p>
           <div id="formcontact">
-            <input type="text" name="nom" id="nom" required="" class="div-resi_main_right_form_name" placeholder="Nom">
-            <input type="text" required="" name="prenom" id="prenom" placeholder="Prénom">
-            <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,6}$" required="" name="email" id="mail" placeholder="E-mail">
-            <input type="tel" required="" name="telephone" id="telephone" placeholder="Téléphone">
-            <textarea class="contactmsg" rows="5" id="message" name="message" placeholder="L'annonce de location que vous proposez m'intéresse vivement. Pouvez-vous me contacter s'il vous plaît, afin d'obtenir des informations complémentaires?
+            <input type="text" id="nom" placeholder="Nom">
+            <input type="text" id="prenom" placeholder="Prénom">
+            <input type="email" id="mail" placeholder="E-mail">
+            <input type="tel" id="telephone" placeholder="Téléphone">
+            <textarea rows="5" id="message" placeholder="L'annonce de location que vous proposez m'intéresse vivement. Pouvez-vous me contacter s'il vous plaît, afin d'obtenir des informations complémentaires?
   Dans l'attente de vous lire"></textarea>
+            <span id="error-contact"></span>
+            <button id="sendcontact">Envoyer</button>
           </div>
         </div>
       </div>

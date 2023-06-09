@@ -478,7 +478,23 @@
         ],
         "summary": "Send a message",
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "destinataire": {
+                  "example": "any"
+                },
+                "contenu": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -506,6 +522,42 @@
             "description": "OK"
           }
         }
+      }
+    },
+    "/demande": {
+      "post": {
+        "tags": [
+          "Demande"
+        ],
+        "summary": "Send a demand",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nom": {
+                  "example": "any"
+                },
+                "prenom": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                },
+                "telephone": {
+                  "example": "any"
+                },
+                "message": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {}
       }
     }
   }

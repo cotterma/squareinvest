@@ -1,5 +1,6 @@
-import {back, admins} from "./config.js";
-import { showPreviousSlide, showNextSlide} from "./gallery.js";
+import { back, admins } from "./config.js";
+import { showPreviousSlide, showNextSlide } from "./gallery.js";
+import { sendDemand } from "./demande.js";
 
 function sendAnnonce() {
   var fileInput = document.getElementById("image");
@@ -69,21 +70,21 @@ async function getAnnonces() {
           throw error;
         });
       }
-    }).then((json) => {
-        return json;
-      }
-    )
+    })
+    .then((json) => {
+      return json;
+    })
     .catch((error) => {
       // Gérer les erreurs
       console.log(error);
     });
-    return annonces;
+  return annonces;
 }
 
 async function getAnnonce(element) {
   const loading = document.createElement("div");
   loading.setAttribute("id", "loading-spinner");
-  element.append(loading)
+  element.append(loading);
   const id = element.getAttribute("id");
   const url = back + "/annonce/" + id;
   const annonce = await fetch(url, {
@@ -98,19 +99,19 @@ async function getAnnonce(element) {
           throw error;
         });
       }
-    }).then((json) => {
-        element.removeChild(loading);
-        return json;
-      }
-    )
+    })
+    .then((json) => {
+      element.removeChild(loading);
+      return json;
+    })
     .catch((error) => {
       // Gérer les erreurs
       console.log(error);
     });
-    return annonce;
+  return annonce;
 }
 
-async function setAnnonces(){
+async function setAnnonces() {
   const json = await getAnnonces();
   const list = document.querySelector("#appartement-list");
   list.innerHTML = "";
@@ -148,7 +149,7 @@ async function setAnnonces(){
     announce_infos.classList.add("appartement-infos");
     const announce_price = document.createElement("div");
     announce_price.classList.add("appartement-price");
-    announce_price.innerText = element.prix + "€/mois" ;
+    announce_price.innerText = element.prix + "€/mois";
     announce_infos.appendChild(announce_price);
 
     new_annonce.appendChild(announce_image);
@@ -157,12 +158,12 @@ async function setAnnonces(){
 
     list.appendChild(new_annonce);
   }
-  if (admins.includes(localStorage.getItem("email"))){
-    setRestricted(json)
+  if (admins.includes(localStorage.getItem("email"))) {
+    setRestricted(json);
   }
 }
 
-function setRestricted(json){
+function setRestricted(json) {
   const list = document.querySelector("#liste-annonces");
   list.innerHTML = "";
   for (let element of json.data) {
@@ -194,7 +195,7 @@ function setRestricted(json){
   }
 }
 
-function deleteAnnonce(id){
+function deleteAnnonce(id) {
   const url = back + "/auth_api/annonce/" + id;
   fetch(url, {
     method: "DELETE",
@@ -219,14 +220,14 @@ function deleteAnnonce(id){
     });
 }
 
-function back_appart(){
+function back_appart() {
   const selected_annonce = document.querySelector(".selected-annonce");
   selected_annonce.classList.add("hidden");
   const main = document.querySelector(".appartement-main");
   main.classList.remove("hidden");
 }
 
-async function displayAnnonce(element){
+async function displayAnnonce(element) {
   const annonce = await getAnnonce(element);
   const selected_annonce = document.querySelector(".selected-annonce");
   let main = document.querySelector("main");
@@ -234,12 +235,16 @@ async function displayAnnonce(element){
   for (var i = 0; i < contents.length; i++) {
     var node = contents[i];
 
-    if (node.nodeType === Node.ELEMENT_NODE && !node.classList.contains("hidden")) {
-      node.classList.add('hidden');
+    if (
+      node.nodeType === Node.ELEMENT_NODE &&
+      !node.classList.contains("hidden")
+    ) {
+      node.classList.add("hidden");
     }
   }
   selected_annonce.classList.remove("hidden");
-  const form  = document.querySelector("#contact").cloneNode(true);
+  const form = document.querySelector("#contact").cloneNode(true);
+  form.querySelector("#error-contact").innerText = "";
   selected_annonce.innerHTML = "";
   const back_button = document.createElement("div");
   back_button.classList.add("back-button");
@@ -272,12 +277,12 @@ async function displayAnnonce(element){
   }
   announce_gallery.firstChild.firstChild.classList.remove("hidden");
 
-  const prev_arrow= document.createElement("div");
+  const prev_arrow = document.createElement("div");
   prev_arrow.setAttribute("id", "prev-arrow");
   prev_arrow.innerHTML = "&#10094;";
   announce_gallery.appendChild(prev_arrow);
 
-  const next_arrow= document.createElement("div");
+  const next_arrow = document.createElement("div");
   next_arrow.setAttribute("id", "next-arrow");
   next_arrow.innerHTML = "&#10095;";
   announce_gallery.appendChild(next_arrow);
@@ -288,31 +293,49 @@ async function displayAnnonce(element){
   announce_content.appendChild(announce_description);
 
   selected_annonce.appendChild(form);
-  setGallery()
+  document.querySelector("#sendcontact").addEventListener(
+    "click",
+    () => {
+      sendDemand();
+    },
+    false
+  );
+  setGallery();
 }
 
-function setGallery(){
-  const prevArrow = document.querySelector('#prev-arrow');
-  const nextArrow = document.querySelector('#next-arrow');
+function setGallery() {
+  const prevArrow = document.querySelector("#prev-arrow");
+  const nextArrow = document.querySelector("#next-arrow");
 
-  prevArrow.addEventListener('click', () => {showPreviousSlide()}, false);
-  nextArrow.addEventListener('click', () => {showNextSlide()}, false);
+  prevArrow.addEventListener(
+    "click",
+    () => {
+      showPreviousSlide();
+    },
+    false
+  );
+  nextArrow.addEventListener(
+    "click",
+    () => {
+      showNextSlide();
+    },
+    false
+  );
 }
 
 async function refresh() {
-  window.location.reload()
+  window.location.reload();
 }
 
-function showEdit(element){
+function showEdit(element) {
   const id = element.getAttribute("id");
   const parent = element.parentNode;
-  if (parent.classList.contains("editing")){
+  if (parent.classList.contains("editing")) {
     parent.classList.remove("editing");
     parent.removeChild(parent.lastChild);
-  }
-  else{
+  } else {
     const previousEdit = document.querySelector(".editing");
-    if (previousEdit){
+    if (previousEdit) {
       previousEdit.classList.remove("editing");
       previousEdit.removeChild(previousEdit.lastChild);
     }
@@ -344,28 +367,35 @@ function showEdit(element){
     submit_button.innerHTML = "Modifier";
     form.appendChild(submit_button);
 
-    submit_button.addEventListener("click", () => {
-      editAnnonce();
-      showEdit(element);
-    }, false);
+    submit_button.addEventListener(
+      "click",
+      () => {
+        editAnnonce();
+        showEdit(element);
+      },
+      false
+    );
 
-    parent.appendChild(form)
+    parent.appendChild(form);
   }
 }
 
-function editAnnonce(){
+function editAnnonce() {
   const id = document.querySelector("#submit-edit").getAttribute("id_annonce");
   const url = back + "/auth_api/annonce/" + id;
   const formData = new FormData();
   formData.append("titre", document.querySelector("#title-edit").value);
-  formData.append("description", document.querySelector("#description-edit").value);
+  formData.append(
+    "description",
+    document.querySelector("#description-edit").value
+  );
   formData.append("prix", document.querySelector("#info-edit").value);
   fetch(url, {
     method: "PUT",
     headers: {
       "x-access-token": localStorage.getItem("token"),
     },
-    body : formData
+    body: formData,
   })
     .then((response) => {
       // Traiter la réponse du serveur

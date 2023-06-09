@@ -208,7 +208,7 @@ app.post(['/register', '/login', '/confirmMail'], async (req, res, next) => {
     await jsonVerifFunction(req, res, next)
 })
 
-app.post('*/msg', upload.none(), function (req, res, next) {
+app.post(['*/msg', '/demande'], upload.none(), function (req, res, next) {
   // Access the form data fields via req.body
   next()
 });
