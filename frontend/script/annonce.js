@@ -53,6 +53,10 @@ function sendAnnonce() {
 }
 
 async function getAnnonces() {
+  const main= document.querySelector(".appartement-main");
+  const loading = document.createElement("div");
+  loading.setAttribute("id", "loading-spinner");
+  main.append(loading)
   const url = back + "/annonces";
   const annonces = await fetch(url, {
     method: "GET",
@@ -63,6 +67,7 @@ async function getAnnonces() {
     .then((response) => {
       // Traiter la réponse du serveur
       if (response.ok) {
+        main.removeChild(loading);
         return response.json();
       } else {
         return response.json().then((error) => {
@@ -75,6 +80,14 @@ async function getAnnonces() {
     )
     .catch((error) => {
       // Gérer les erreurs
+      main.removeChild(loading);
+      const error_message = document.createElement("div");
+      error_message.setAttribute("id", "error-appartement");
+      error_message.innerText = "Une erreur est survenue lors du chargement des annonces, veuillez rafraichir la page";
+      error_message.style.display = "flex";
+      error_message.style.justifyContent = "center";
+      error_message.style.textAlign = "center";
+      main.appendChild(error_message);
       console.log(error);
     });
     return annonces;
@@ -105,6 +118,8 @@ async function getAnnonce(element) {
     )
     .catch((error) => {
       // Gérer les erreurs
+      element.removeChild(loading);
+      alert("Une erreur est survenue lors du chargement de l'annonce")
       console.log(error);
     });
     return annonce;
