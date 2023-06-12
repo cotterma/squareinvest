@@ -1,5 +1,3 @@
-import { resetSlide } from "./gallery.js";
-
 function switchMenu(id) {
   let main = document.querySelector("main");
   let contents = main.childNodes;
@@ -26,7 +24,6 @@ function miseEnPlace() {
       "click",
       function () {
         switchMenu(element.getAttribute("id"));
-        resetSlide();
       },
       false
     );
@@ -35,14 +32,12 @@ function miseEnPlace() {
     "click",
     function () {
       switchMenu("account-main");
-      resetSlide();
     }
   );
   document.querySelector("#click-appart").addEventListener(
     "click",
     function () {
       switchMenu("appartement-main");
-      resetSlide();
     }
   );
 }

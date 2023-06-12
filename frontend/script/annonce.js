@@ -1,5 +1,5 @@
 import {back, admins} from "./config.js";
-import { showPreviousSlide, showNextSlide} from "./gallery.js";
+import { showPreviousSlide, showNextSlide, resetSlide} from "./gallery.js";
 
 function sendAnnonce() {
   var fileInput = document.getElementById("image");
@@ -243,6 +243,7 @@ function back_appart(){
 
 async function displayAnnonce(element){
   const annonce = await getAnnonce(element);
+  resetSlide();
   const selected_annonce = document.querySelector(".selected-annonce");
   let main = document.querySelector("main");
   let contents = main.childNodes;
