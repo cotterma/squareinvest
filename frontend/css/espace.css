@@ -1,6 +1,8 @@
 .espace-menu{
     display : flex;
+    margin : 0 auto;
     flex-direction : column;
+    width : 30%;
     height : 200px;
     justify-content : center;
     align-items : center;
@@ -9,6 +11,7 @@
 #espace-admin{
     overflow: hidden;
     border : none;
+    width : 100%;
     padding : 10px;
     background-color: #23527c;
     color : white;
@@ -26,6 +29,16 @@
 
 .auth-valid{
     display : flex;
+    flex-direction : row;
+    width : 100%;
+    border : none;
+    padding : 5px;
+    justify-content : center;
+    cursor : pointer
+}
+
+.auth-valid:hover{
+    background-color: grey;
 }
 
 .hidden{

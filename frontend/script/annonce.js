@@ -1,5 +1,5 @@
 import { back, admins } from "./config.js";
-import { showPreviousSlide, showNextSlide } from "./gallery.js";
+import { showPreviousSlide, showNextSlide, resetSlide} from "./gallery.js";
 import { sendDemand } from "./demande.js";
 
 function sendAnnonce() {
@@ -26,7 +26,7 @@ function sendAnnonce() {
     fetch(url, {
       method: "POST",
       headers: {
-        "x-access-token": localStorage.getItem("token"),
+        "x-access-token": localStorage.getItem("auth"),
       },
       body: formData,
     })
@@ -158,7 +158,8 @@ async function setAnnonces() {
 
     list.appendChild(new_annonce);
   }
-  if (admins.includes(localStorage.getItem("email"))) {
+  // if (admins.includes(localStorage.getItem("email"))) {
+  if (localStorage.getItem("auth")) {
     setRestricted(json);
   }
 }
@@ -200,7 +201,7 @@ function deleteAnnonce(id) {
   fetch(url, {
     method: "DELETE",
     headers: {
-      "x-access-token": localStorage.getItem("token"),
+      "x-access-token": localStorage.getItem("auth"),
     },
   })
     .then((response) => {
@@ -229,6 +230,7 @@ function back_appart() {
 
 async function displayAnnonce(element) {
   const annonce = await getAnnonce(element);
+  resetSlide();
   const selected_annonce = document.querySelector(".selected-annonce");
   let main = document.querySelector("main");
   let contents = main.childNodes;
@@ -393,7 +395,7 @@ function editAnnonce() {
   fetch(url, {
     method: "PUT",
     headers: {
-      "x-access-token": localStorage.getItem("token"),
+      "x-access-token": localStorage.getItem("auth"),
     },
     body: formData,
   })
@@ -414,21 +416,9 @@ function editAnnonce() {
     });
 }
 
-/* On document loading */
-async function miseEnPlace() {
-  await setAnnonces();
-
-  for (let element of document.querySelectorAll(".appartement")) {
-    element.addEventListener(
-      "click",
-      function () {
-        displayAnnonce(element);
-      },
-      false
-    );
-  }
-
-  if (admins.includes(localStorage.getItem("email"))) {
+function refreshAdmin() {
+// if (admins.includes(localStorage.getItem("email"))) {
+  if (localStorage.getItem("auth")){
     document.querySelector("#send-annonce").addEventListener(
       "click",
       function () {
@@ -455,6 +445,22 @@ async function miseEnPlace() {
       );
     }
   }
+}
+
+/* On document loading */
+async function miseEnPlace() {
+  await setAnnonces();
+
+  for (let element of document.querySelectorAll(".appartement")) {
+    element.addEventListener(
+      "click",
+      function () {
+        displayAnnonce(element);
+      },
+      false
+    );
+  }
+  refreshAdmin();
 }
 
 window.addEventListener("load", miseEnPlace, false);

@@ -559,6 +559,17 @@
         ],
         "responses": {}
       }
+    },
+    "/auth": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Access to admin",
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
     }
   }
 }

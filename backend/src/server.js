@@ -5,7 +5,7 @@ issu du dépôt
 */
 
 // Load Enviroment Variables to process.env (if not present take variables defined in .env file)
-require('mandatoryenv').load(['PORT'])
+require('mandatoryenv').load(['PORT', 'TOKENSECRET'])
 const { PORT } = process.env
 const { TOKENSECRET } = process.env
 

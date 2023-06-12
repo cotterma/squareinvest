@@ -6,12 +6,16 @@ function showAuth() {
   if (document.querySelector(".espace-menu .auth-field")) {
       menu.removeChild(document.querySelector(".espace-menu .auth-field"))
       menu.removeChild(document.querySelector(".espace-menu .auth-valid"))
-  }
+      menu.removeChild(document.querySelector(".espace-menu #error-auth"))
+    }
   else{
     const passwordField = document.createElement("input");
     passwordField.classList.add("auth-field");
+    passwordField.setAttribute("type", "password");
     passwordField.setAttribute("id", "auth-password");
     passwordField.setAttribute("placeholder", "Mot de passe");
+    const error = document.createElement("span");
+    error.setAttribute("id", "error-auth");
     const passwordValid = document.createElement("button");
     passwordValid.classList.add("auth-valid");
     passwordValid.setAttribute("id", "auth-valid");
@@ -24,6 +28,7 @@ function showAuth() {
       false
     );
     espaceAdmin.insertAdjacentElement("afterend", passwordValid);
+    espaceAdmin.insertAdjacentElement("afterend", error);
     espaceAdmin.insertAdjacentElement("afterend", passwordField);
   }
 }
@@ -36,38 +41,57 @@ function verifPass(){
   fetch(url, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/x-www-form-urlencoded",
     },
+    body: body,
   })
   .then((response) => {
     if (response.ok) {
       return response.json()
     }
     else{
-      throw new Error("Mot de passe incorrect")
+      document.querySelector("#error-auth").textContent = "Mot de passe incorrect"
+      return response.json().then((err) => {
+        throw new Error(err)
+      })
     }
-  }).then((data) => {
-    localStorage.setItem("token", data.token)
-    showPanel()
+  }).then((json) => {
+    localStorage.setItem("auth", json.data)
+    window.location.reload()
   })  
+  .catch((error) => {
+    console.log(error)
+  })
 }
 
 function showPanel(){
   const espacemenu = document.querySelector(".espace-menu")
   espacemenu.classList.add("hidden")
-  const adminmenu = document.querySelector("#admin-menu")
+  const adminmenu = document.querySelector(".admin-menu")
   adminmenu.classList.remove("hidden")
 }
 
+function backLogout(){
+  localStorage.removeItem("auth")
+  window.location.reload()
+}
+
 function miseEnPlace() {
-  const espaceAdmin = document.getElementById("espace-admin");
-  espaceAdmin.addEventListener(
-    "click",
-    function () {
-      showAuth();
-    },
-    false
-  );
+  if (localStorage.getItem("auth")) {
+    showPanel()
+    const logout = document.querySelector(".admin-menu .back-button")
+    logout.addEventListener("click", backLogout, false)
+  }
+  else{
+    const espaceAdmin = document.getElementById("espace-admin");
+    espaceAdmin.addEventListener(
+      "click",
+      function () {
+        showAuth();
+      },
+      false
+    );
+  }
 }
 
 window.addEventListener("load", miseEnPlace);

@@ -103,17 +103,20 @@ app.use('/auth_api/*', async (req, res, next) => {
 
   // Token valid
   const token = req.headers["x-access-token"];
-  if (!jws.verify(token, "HS256", TOKENSECRET)) {
-    throw new CodeError("You don't have access rights", status.FORBIDDEN)
-  }
+  // if (!jws.verify(token, "HS256", TOKENSECRET)) {
+  //   throw new CodeError("You don't have access rights", status.FORBIDDEN)
+  // }
 
-  // User sending the token valid
-  const email = jws.decode(token).payload
-  const user = await userModel.findOne({ where: { email: email }, attributes: ['email'] })
-  if (!user) {
-    throw new CodeError("You don't have access rights", status.FORBIDDEN)
+  // // User sending the token valid
+  // const email = jws.decode(token).payload
+  // const user = await userModel.findOne({ where: { email: email }, attributes: ['email'] })
+  // if (!user) {
+  //   throw new CodeError("You don't have access rights", status.FORBIDDEN)
+  // }
+  // req.authMail = user.email
+  if (token != process.env.ADMIN_TOKEN){
+    throw new CodeError("Wrong token", status.FORBIDDEN)
   }
-  req.authMail = user.email
 
   // Everything is okay, next middleware
   next()
@@ -204,7 +207,7 @@ let jsonVerifFunction = async (req, res, next) => {
 }
 
 // Middleware that parses the JSON data field of the request
-app.post(['/register', '/login', '/confirmMail'], async (req, res, next) => {
+app.post(['/register', '/login', '/confirmMail', '/auth'], async (req, res, next) => {
     await jsonVerifFunction(req, res, next)
 })
 

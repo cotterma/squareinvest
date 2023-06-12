@@ -408,21 +408,33 @@ button#login {
 
 /* ADMIN */
 
-.admin-main > * {
+.admin-menu {
   margin: 0 auto;
   flex-direction: column;
   display: flex;
+  align-items: center;
   width: 70%;
 }
 
 .admin-title {
   font-weight: 600;
-  align-items: center;
   margin-bottom: 20px;
   margin-top: 30px;
 }
 
 .edit-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+#ajout-annonce{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+#liste-annonces{
   display: flex;
   flex-direction: column;
   width: 100%;

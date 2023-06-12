@@ -43,9 +43,9 @@ module.exports = {
         const { titre, description, prix } = req.body;
         const paths  = req.filesPath;
         //VERIFY USER IS ADMIN
-        if (!admins.includes(req.authMail)){
-            throw new Error("You are not allowed to create an annonce")
-        }
+        // if (!admins.includes(req.authMail)){
+        //     throw new Error("You are not allowed to create an annonce")
+        // }
 
         // Create the annonce entry in the database
         const query = `
@@ -81,9 +81,9 @@ module.exports = {
         const { id } = req.params;
         
         //VERIFY USER IS ADMIN
-        if (!admins.includes(req.authMail)){
-            throw new Error("You are not allowed to delete an annonce")
-        }
+        // if (!admins.includes(req.authMail)){
+        //     throw new Error("You are not allowed to delete an annonce")
+        // }
 
         // Delete the annonce entry in the database
         const image = await imageModel.destroy({ where: { id_annonce: id } });
@@ -100,9 +100,9 @@ module.exports = {
         const { titre, description, prix } = req.body;
 
         //VERIFY USER IS ADMIN
-        if (!admins.includes(req.authMail)){
-            throw new Error("You are not allowed to update an annonce")
-        }
+        // if (!admins.includes(req.authMail)){
+        //     throw new Error("You are not allowed to update an annonce")
+        // }
 
         // Update the annonce entry in the database
         const query = `UPDATE ADMIN."annonces" SET "titre" = :titre, "description" = :description, "prix" = :prix WHERE "id" = :id`;
