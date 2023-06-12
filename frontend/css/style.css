@@ -422,6 +422,14 @@ button#login {
   margin-top: 30px;
 }
 
+#selected-photos img{
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  object-position: 50% 50%;
+  margin: 10px;
+}
+
 .edit-form {
   display: flex;
   flex-direction: column;

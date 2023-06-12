@@ -365,7 +365,10 @@ app.delete('*/annonce/:id', async (req, res, next) => {
     const bucket = storage.bucket(bucket_name);
     for (let i = 0; i < images.length; i++) {
       const file = bucket.file(images[i].path);
-      await file.delete();
+      const fileExists = await file.exists();
+      if(fileExists[0]){
+        await file.delete();
+      }
     }
 
     next();
