@@ -160,6 +160,8 @@ footer {
   font-weight: 600;
   white-space: pre-line;
   margin : 100px auto;
+  height: fit-content;
+  align-self: center;
 }
 
 .grid-home{
