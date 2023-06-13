@@ -2,7 +2,7 @@ const status = require("http-status")
 const has = require('has-keys')
 const jws = require('jws')
 const bcrypt = require("bcrypt")
-require('mandatoryenv').load(['TOKENSECRET'])
+require('mandatoryenv').load(['TOKENSECRET' , 'BCRYPT_SALT'])
 const { TOKENSECRET, BCRYPT_SALT } = process.env
 const userModel = require('../models/users.js')
 const documentModel = require('../models/documents.js')

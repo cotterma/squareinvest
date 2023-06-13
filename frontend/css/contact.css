@@ -1,0 +1,43 @@
+#contact{
+    background-color: #f7effb;
+    margin-top : 100px;
+    width : 60%;
+    padding-bottom : 30px;
+    justify-content: center;
+}
+
+#contact p {
+    display : flex;
+    font-size: 1.5em;
+    font-weight: 600;
+    justify-content: center;
+    text-align: center;
+}
+
+#formcontact{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin: 0px auto;
+}
+
+#sendcontact{
+    display: flex;
+    justify-content: center;
+    background-color: #4d047e;
+    border : none;
+    padding : 10px;
+    color : white;
+    cursor : pointer;
+}
+
+#sendcontact:hover{
+    background-color: #1a3e5c;
+}
+
+#error-contact{
+    color: red;
+    font-size: 1em;
+    margin: 10px auto;
+    text-align: center;
+}

@@ -11,13 +11,16 @@
     <link type="text/css" href="./css/account.css" rel="StyleSheet" />
     <link type="text/css" href="./css/loading.css" rel="StyleSheet" />
     <link type="text/css" href="./css/icon.css" rel="StyleSheet" />
+    <link type="text/css" href="./css/contact.css" rel="StyleSheet" />
+    <link type="text/css" href="./css/espace.css" rel="StyleSheet" />
     <script src="./script/navigate.js" type="module"></script>
     <script src="./script/account.js" type="module"></script>
     <script src="./script/document.js" type="module"></script>
     <script src="./script/annonce.js" type="module"></script>
     <script src="./script/gallery.js" type="module"></script>
     <script src="./script/messagerie.js" type="module"></script>
-
+    <script src="./script/demande.js" type="module"></script>
+    <script src="./script/admin.js" type="module"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -59,20 +62,22 @@
       <!-- RESIDENCE INFO -->
       <div class="home-main">
         <!-- <img src="./images/grenoble.jpg" class="wide-image crop-wide" load="lazy"/> -->
-        <div class="home">
-          <div class="home-title">Localisation</div>
-          <div class="home-more">Adresse : 16 rue de Mayencin, Saint Martin d'Hères
+        <div class="home grid-home">
+          <div class="home-title grid-item">Localisation</div>
+          <div class="home-more grid-item">Adresse : 16 rue de Mayencin, 38400 Saint Martin d'Hères
 
             A proximité (50 mètres à pied) de l'arrêt de tram "Mayencin Champ Roman" (ligne B)
             
             Situé à 300 mètres du campus universitaire et à 20 minutes du centre ville de Grenoble
             
             Nombreux commerces (boulangerie, pharmacie, supermarché) accessibles aux alentours
+
+            Téléphone : 04 76 00 18 95
+
+            Mail : squareinvest38@yahoo.fr
           </div>
-        </div>
-        <div class="home">
-          <div class="home-title">Services</div>
-          <div class="home-more">Résidence sécurisée par caméra et digicode
+          <div class="home-title grid-item">Services</div>
+          <div class="home-more grid-item">Résidence sécurisée par caméra et digicode
             
             Résidence équipée de la fibre optique
             
@@ -84,18 +89,14 @@
 
             Entretien hebdomadaire des parties communes
           </div>
-        </div>
-        <div class="home">
-          <div class="home-title">
+          <div class="home-title grid-item">
             Appartements
           </div>
-          <div id="click-appart" class="home-more">Cliquer ici pour voir les appartements</div>
-        </div>
-        <div class="home">
-          <div class="home-title">
+          <div id="click-appart" class="home-more grid-item">Cliquer ici pour voir les appartements</div>
+          <div class="home-title grid-item">
             À propos
           </div>
-          <div class="home-more">Surface des appartements de 18m² à 23m²
+          <div class="home-more grid-item">Surface des appartements de 18m² à 23m²
 
             Loyer charges comprises à partir de 485€/mois
 
@@ -197,6 +198,20 @@
           <div class="selected-description">
             HELLO CECI EST UNE LONGUE DESCRIPTION
             WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOW
+          </div>
+        </div>
+        <div id="contact">
+          <p>Informations - Canditatures</p>
+          <p>Délai de réponse moyen: 24-48h</p>
+          <div id="formcontact">
+            <input type="text" id="nom" placeholder="Nom">
+            <input type="text" id="prenom" placeholder="Prénom">
+            <input type="email" id="mail" placeholder="E-mail">
+            <input type="tel" id="telephone" placeholder="Téléphone">
+            <textarea rows="5" id="message" placeholder="L'annonce de location que vous proposez m'intéresse vivement. Pouvez-vous me contacter s'il vous plaît, afin d'obtenir des informations complémentaires?
+  Dans l'attente de vous lire"></textarea>
+            <span id="error-contact"></span>
+            <button id="sendcontact">Envoyer</button>
           </div>
         </div>
       </div>
@@ -317,39 +332,70 @@
 
       <!-- ADMIN PANEL -->
       <div class="admin-main hidden">
-        <div class="admin-title">AJOUTER UNE ANNONCE</div>
-        <div id="ajout-annonce">
-          <input
-            type="text"
-            id="titre-annonce"
-            placeholder="Titre de l'annonce"
-          />
-          <textarea id="description-annonce"> </textarea>
-          <input
-            type="text"
-            id="prix-annonce"
-            placeholder="Prix de l'annonce"
-          />
-          <input type="file" id="image" multiple="multiple" />
-          <button id="send-annonce">Envoyer annonce</button>
+        <div class="espace-menu">
+          <button id="espace-admin">ESPACE ADMINISTRATEUR</button>
         </div>
-        <div class="admin-title">LISTE DES ANNONCES</div>
-        <div id="liste-annonces"></div>
-        <div class="admin-title">LISTE DES UTILISATEURS</div>
-        <div id="liste-utilisateurs">
-          <div class="utilisateur">
-            <div class="utilisateur-title">Utilisateur 1</div>
-            <button class="utilisateur-doc">Document</button>
-            <button class="utilisateur-doc">Document</button>
-            <button class="utilisateur-delete">Supprimer utilisateur</button>
-            <hr class="utilisateur-hr" />
+        <div class="admin-menu hidden">
+          <div class="back-button"></div>
+          <div class="admin-title">AJOUTER UNE ANNONCE</div>
+          <div id="ajout-annonce">
+            <input
+              type="text"
+              id="titre-annonce"
+              placeholder="Titre de l'annonce"
+            />
+            <textarea id="description-annonce"> </textarea>
+            <input
+              type="text"
+              id="prix-annonce"
+              placeholder="Prix de l'annonce"
+            />
+            <input type="file" id="image" accept="image/*" multiple onchange="displaySelectedPhotos(event)" />
+            <div id="selected-photos"></div>
+            <button id="send-annonce">Envoyer annonce</button>
+            <script>
+              function displaySelectedPhotos(event) {
+                const files = event.target.files;
+                const selectedPhotosContainer = document.getElementById("selected-photos");
+            
+                // Clear previous selection
+                selectedPhotosContainer.innerHTML = "";
+            
+                for (let i = 0; i < files.length; i++) {
+                  const file = files[i];
+                  const reader = new FileReader();
+            
+                  reader.onload = function () {
+                    const imgElement = document.createElement("img");
+                    imgElement.src = reader.result;
+                    selectedPhotosContainer.appendChild(imgElement);
+                  };
+            
+                  if (file) {
+                    reader.readAsDataURL(file);
+                  }
+                }
+              }
+            </script>
           </div>
-          <div class="utilisateur">
-            <div class="utilisateur-title">Utilisateur 1</div>
-            <button class="utilisateur-doc">Document</button>
-            <button class="utilisateur-doc">Document</button>
-            <button class="utilisateur-delete">Supprimer utilisateur</button>
-            <hr class="utilisateur-hr" />
+          <div class="admin-title">LISTE DES ANNONCES</div>
+          <div id="liste-annonces"></div>
+          <div class="admin-title hidden">LISTE DES UTILISATEURS</div>
+          <div id="liste-utilisateurs" class="hidden">
+            <div class="utilisateur">
+              <div class="utilisateur-title">Utilisateur 1</div>
+              <button class="utilisateur-doc">Document</button>
+              <button class="utilisateur-doc">Document</button>
+              <button class="utilisateur-delete">Supprimer utilisateur</button>
+              <hr class="utilisateur-hr" />
+            </div>
+            <div class="utilisateur">
+              <div class="utilisateur-title">Utilisateur 1</div>
+              <button class="utilisateur-doc">Document</button>
+              <button class="utilisateur-doc">Document</button>
+              <button class="utilisateur-delete">Supprimer utilisateur</button>
+              <hr class="utilisateur-hr" />
+            </div>
           </div>
         </div>
       </div>
