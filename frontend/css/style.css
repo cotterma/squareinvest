@@ -765,6 +765,10 @@ button#login {
     padding : 100px;
   }
 
+  .grid{
+    margin-top: 100px;
+  }
+
   .crop-wide {
     width: 100%;
     display: flex;
