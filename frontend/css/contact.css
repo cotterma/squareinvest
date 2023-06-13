@@ -1,5 +1,5 @@
 #contact{
-    background-color: #EFF5FB;
+    background-color: #f7effb;
     margin-top : 100px;
     width : 60%;
     padding-bottom : 30px;
@@ -24,7 +24,7 @@
 #sendcontact{
     display: flex;
     justify-content: center;
-    background-color: #23527c;
+    background-color: #4d047e;
     border : none;
     padding : 10px;
     color : white;
