@@ -41,3 +41,10 @@
     margin: 10px auto;
     text-align: center;
 }
+
+@media only screen and (max-width: 1240px) {
+
+    #formcontact{
+        width: 100%;
+    }
+}
