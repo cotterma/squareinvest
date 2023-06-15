@@ -62,7 +62,7 @@ async function sendMessage() {
   const username = document
     .querySelector("#send-message")
     .getAttribute("receiver");
-  const message_input = document.querySelector("#message");
+  const message_input = document.querySelector("#write-message");
   const message = message_input.value;
   message_input.value = "";
   const url = back + "/auth_api/msg";
