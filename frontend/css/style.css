@@ -414,12 +414,25 @@ button#login {
   display: flex;
   margin: 30px auto;
   flex-direction: column;
+  padding-bottom: 40px;
 }
 
 .document-menutitle {
   margin: 40px auto;
   font-size: 2em;
+  font-weight: 600;
 }
+
+.document-list{
+  margin-bottom : 50px;
+}
+
+.document{
+  margin : 20px auto;
+  text-align: center;
+  font-size: 20px;
+}
+
 
 #document-form {
   display: flex;

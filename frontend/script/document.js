@@ -245,13 +245,13 @@ async function miseEnPlace() {
     );
   }
 
-  document.querySelector("#send-doc").addEventListener(
-    "click",
-    function () {
-      sendDoc();
-    },
-    false
-  );
+  // document.querySelector("#send-doc").addEventListener(
+  //   "click",
+  //   function () {
+  //     sendDoc();
+  //   },
+  //   false
+  // );
 }
 
 window.addEventListener("load", miseEnPlace, false);
