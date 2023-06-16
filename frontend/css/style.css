@@ -162,6 +162,8 @@ footer {
   margin : 100px auto;
   height: fit-content;
   align-self: center;
+  overflow: hidden;
+  word-wrap: break-word;
 }
 
 .grid-home{
