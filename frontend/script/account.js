@@ -212,7 +212,7 @@ async function showWho() {
   localStorage.setItem("username", user.data.username);
   localStorage.setItem("email", user.data.email);
   showAccount(user.data.username);
-  showRestricted(user.data.email);
+  // showRestricted(user.data.email);
 }
 
 async function getUsers() {
@@ -428,11 +428,11 @@ async function miseEnPlace() {
         .addEventListener("click", function () {
           editPassword();
         });
-      document
-        .querySelector("#edit-preference")
-        .addEventListener("click", function () {
-          editPref();
-        });
+      // document
+      //   .querySelector("#edit-preference")
+      //   .addEventListener("click", function () {
+      //     editPref();
+      //   });
       document
         .querySelector("#delete-account")
         .addEventListener("click", function () {

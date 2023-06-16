@@ -178,31 +178,31 @@ function scrollToBottom() {
 }
 
 function miseEnPlace() {
-  if (localStorage.getItem("token")) {
-    setContacts();
+  // if (localStorage.getItem("token")) {
+  //   setContacts();
 
-    const back_button = document.querySelector(
-      ".messagerie-messages .back-button"
-    );
-    const message = document.querySelector("#send-message");
-    back_button.addEventListener(
-      "click",
-      () => {
-        const contacts = document.querySelector(".messagerie-contacts");
-        contacts.classList.remove("hidden");
+  //   const back_button = document.querySelector(
+  //     ".messagerie-messages .back-button"
+  //   );
+  //   const message = document.querySelector("#send-message");
+  //   back_button.addEventListener(
+  //     "click",
+  //     () => {
+  //       const contacts = document.querySelector(".messagerie-contacts");
+  //       contacts.classList.remove("hidden");
 
-        const conversation = document.querySelector(".messagerie-messages");
-        conversation.classList.add("hidden");
-      },
-      false
-    );
-    message.addEventListener(
-      "click",
-      () => {
-        sendMessage();
-      },
-      false
-    );
+  //       const conversation = document.querySelector(".messagerie-messages");
+  //       conversation.classList.add("hidden");
+  //     },
+  //     false
+  //   );
+  //   message.addEventListener(
+  //     "click",
+  //     () => {
+  //       sendMessage();
+  //     },
+  //     false
+  //   );
 
     // socket = new WebSocket("wss://localhost:8080");
 
@@ -232,7 +232,7 @@ function miseEnPlace() {
     // socket.addEventListener('close', () => {
     //   console.log('Disconnected from WebSocket server.');
     // });
-  }
+
 }
 
 export { socket };
