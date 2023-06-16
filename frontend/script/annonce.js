@@ -2,12 +2,14 @@ import { back, admins } from "./config.js";
 import { showPreviousSlide, showNextSlide, resetSlide} from "./gallery.js";
 import { sendDemand } from "./demande.js";
 
+let selectedImages = [];
+
+
 function sendAnnonce() {
-  var fileInput = document.getElementById("image");
   var title = document.getElementById("titre-annonce").value;
   var description = document.getElementById("description-annonce").value;
   var price = document.getElementById("prix-annonce").value;
-  var files = fileInput.files; // Récupérer le fichier sélectionné
+  var files = selectedImages; // Récupérer le fichier sélectionné
   if (files || files.length > 0) {
     // Créer une instance de FormData et y ajouter le fichier
     var formData = new FormData();
@@ -459,7 +461,57 @@ function refreshAdmin() {
         false
       );
     }
+    
+    // Event listener for when an image is selected
+    imageInput.addEventListener('change', handleImageSelection);
   }
+}
+
+const imageInput = document.getElementById('image');
+const imagePreviewContainer = document.getElementById('selected-photos');
+
+// Function to handle image selection
+function handleImageSelection(event) {
+  const files = event.target.files;
+
+  // Loop through selected files and create image previews
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    const reader = new FileReader();
+
+    reader.onload = function(event) {
+      const imageUrl = event.target.result;
+      const imagePreview = createImagePreview(imageUrl);
+      selectedImages.push(file);
+      imagePreviewContainer.appendChild(imagePreview);
+    };
+
+    reader.readAsDataURL(file);
+  }
+
+  // Clear the input field to allow selecting more images
+  imageInput.value = '';
+}
+
+// Function to create an image preview with a delete button
+function createImagePreview(imageUrl) {
+  const imageElement = document.createElement('img');
+  imageElement.src = imageUrl;
+  imageElement.style.cursor = 'pointer';
+  imageElement.addEventListener('mouseover', function() {
+    imageElement.style.opacity = '0.5';
+  });
+  imageElement.addEventListener('mouseout', function() {
+    imageElement.style.opacity = '1';
+  });
+
+  imageElement.addEventListener('click', function() {
+    const index = Array.from(imagePreviewContainer.children).indexOf(imageElement);
+    selectedImages.splice(index, 1);
+    imagePreviewContainer.removeChild(imageElement);
+  });
+
+  return imageElement;
 }
 
 /* On document loading */

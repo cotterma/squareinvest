@@ -43,7 +43,7 @@
           <li id="appartement-main">Appartements</li>
           <li id="document-main" class="">Documents</li>
           <li id="messagerie-main" class="hidden">Messagerie</li>
-          <li id="admin-main" class="hidden">Administration</li>
+          <li id="admin-main" class="">Administration</li>
         </ul>
 
         <ul class="account hidden">
@@ -399,33 +399,9 @@
               id="prix-annonce"
               placeholder="Prix de l'annonce"
             />
-            <input type="file" id="image" accept="image/*" multiple onchange="displaySelectedPhotos(event)" />
+            <input type="file" id="image" accept="image/*" multiple/>
             <div id="selected-photos"></div>
             <button id="send-annonce">Envoyer annonce</button>
-            <script>
-              function displaySelectedPhotos(event) {
-                const files = event.target.files;
-                const selectedPhotosContainer = document.getElementById("selected-photos");
-            
-                // Clear previous selection
-                selectedPhotosContainer.innerHTML = "";
-            
-                for (let i = 0; i < files.length; i++) {
-                  const file = files[i];
-                  const reader = new FileReader();
-            
-                  reader.onload = function () {
-                    const imgElement = document.createElement("img");
-                    imgElement.src = reader.result;
-                    selectedPhotosContainer.appendChild(imgElement);
-                  };
-            
-                  if (file) {
-                    reader.readAsDataURL(file);
-                  }
-                }
-              }
-            </script>
           </div>
           <div class="admin-title">LISTE DES ANNONCES</div>
           <div id="liste-annonces"></div>

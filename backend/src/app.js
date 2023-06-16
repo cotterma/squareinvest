@@ -283,7 +283,7 @@ async function compressImage(file){
   if (file.mimetype === 'image/jpeg') {
     // Compression pour les images JPEG avec imagemin-mozjpeg
     const compressedImage = await sharp(file.buffer)
-    .jpeg({ quality: 80 }) // Adjust the compression quality as needed (between 0 and 100)
+    .jpeg({ quality: 80 }).rotate() // Adjust the compression quality as needed (between 0 and 100)
     .toBuffer();
 
     // Utiliser le fichier compressé dans la suite du traitement
@@ -291,7 +291,7 @@ async function compressImage(file){
   } else if (file.mimetype === 'image/png') {
     // Compression pour les images PNG avec imagemin-pngquant
     const compressedImage = await sharp(file.buffer)
-    .png({ quality: 80 }) // Adjust the compression quality as needed (between 0 and 100)
+    .png({ quality: 80 }).rotate() // Adjust the compression quality as needed (between 0 and 100)
     .toBuffer();
 
     // Utiliser le fichier compressé dans la suite du traitement
