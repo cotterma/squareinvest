@@ -9,6 +9,9 @@ function sendAnnonce() {
   var title = document.getElementById("titre-annonce").value;
   var description = document.getElementById("description-annonce").value;
   var price = document.getElementById("prix-annonce").value;
+  const error = document.getElementById("error-annonce");
+  error.style.color = "green"
+  error.innerText = "Envoi en cours..."
   var files = selectedImages; // Récupérer le fichier sélectionné
   if (files || files.length > 0) {
     // Créer une instance de FormData et y ajouter le fichier
@@ -35,7 +38,7 @@ function sendAnnonce() {
       .then((response) => {
         // Traiter la réponse du serveur
         if (response.ok) {
-          console.log("Annonce envoyée avec succès");
+          error.innerText = "Annonce envoyée avec succès";
           refresh();
         } else {
           return response.json().then((error) => {
@@ -43,9 +46,11 @@ function sendAnnonce() {
           });
         }
       })
-      .catch((error) => {
+      .catch((err) => {
         // Gérer les erreurs
-        console.log(error);
+        console.log(err);
+        error.style.color = "red"
+        error.innerText = "Une erreur est survenue lors de l'envoi de l'annonce, veuillez réessayer";
       });
 
     // À partir d'ici, vous pouvez effectuer la requête AJAX ou envoyer les données via fetch()
