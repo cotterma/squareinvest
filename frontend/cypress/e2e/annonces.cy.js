@@ -29,8 +29,8 @@ describe('Retrieving announces test', () => {
   
       // Submit the form
       cy.get('#send-annonce').click();
-
       cy.wait(10000)
+      cy.intercept('POST', 'https://squareweb.adaptable.app/annonces').as('postAnnonce')
     })
 
     it('delete previous announce', () =>{
@@ -40,7 +40,7 @@ describe('Retrieving announces test', () => {
       cy.get('#auth-password').type(admin_pass);
       cy.get('#auth-valid').click();
 
-      cy.wait(1000)
+      cy.wait(5000)
       cy.get('#admin-main').click();
       // Locate the announcement with the specific title
       cy.contains('.annonce-title', 'Sample Title')
