@@ -24,7 +24,7 @@ module.exports = {
 
         const mailOptions = {
             from: `${email}`,
-            to: `${admins[1]}`,
+            to: `${admins[0]}`,
             subject: `Demande de location de ${nom} ${prenom}`,
             text: `Nom : ${nom} \nPrénom : ${prenom} \nEmail : ${email} \nTéléphone : ${telephone} \nMessage : ${message}`
         };
