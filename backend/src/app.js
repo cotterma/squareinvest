@@ -221,10 +221,64 @@ app.put(['*/user/*'], async (req, res, next) => {
     await jsonVerifFunction(req, res, next)
 })
 
-app.put('*/annonce/*', upload.none(), function (req, res, next) {
-  // Access the form data fields via req.body
-  next()
-});
+app.put('*/annonce/*', upload.array('image'), async function (req, res, next) {
+  const files = req.files; // Array of uploaded files
+
+  if (!files || files.length === 0) {
+    return next(new CodeError('No files uploaded', status.BAD_REQUEST));
+  }
+
+  const bucket = storage.bucket(bucket_name);
+  const uploadPromises = [];
+  req.filesPath = [];
+
+  // Process each uploaded file
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    const newFilename = file.originalname;
+    const fileDestination = 'images/' + newFilename;
+    const gcsFile = bucket.file(fileDestination);
+    const fileExists = await gcsFile.exists();
+    if(!fileExists[0]){
+      await compressImage(file);
+      const uploadPromise = new Promise((resolve, reject) => {
+        const stream = gcsFile.createWriteStream({
+          metadata: {
+            contentType: file.mimetype,
+          },
+        });
+
+        stream.on('error', (err) => {
+          console.error(err);
+          reject(new CodeError('Failed to upload the file', status.INTERNAL_SERVER_ERROR));
+        });
+
+        stream.on('finish', () => {
+          // Perform any necessary actions after file upload
+          // You can store the file path or update the document model here
+          req.filesPath.push(fileDestination);
+          resolve();
+        });
+
+        stream.end(file.buffer);
+      });
+
+      uploadPromises.push(uploadPromise);
+
+    }
+    else{
+      req.filesPath.push(fileDestination);
+    }
+
+  }
+
+  try {
+    await Promise.all(uploadPromises);
+    next();
+  } catch (error) {
+    return next(error);
+  }
+})
 
 // Middleware that handle the send of documents
 app.post('*/upload_doc', upload.single('document'), async (req, res, next) => {

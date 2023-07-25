@@ -5,6 +5,11 @@ const imageModel = require('../models/images.js')
 const admins = require('../admins.js')
 const db = require('../models/database.js')
 
+const keyFile = 'square-387510-fe1d4124a8da.json'
+const { Storage } = require('@google-cloud/storage');
+const storage = new Storage({ keyFilename: keyFile });
+const bucket_name = 'squareinvest38'
+
 module.exports = {
     async getAnnonces (req, res) {
         // #swagger.tags = ['Annonce']
@@ -98,6 +103,7 @@ module.exports = {
         // #swagger.summary = 'Update an annonce'
         const { id } = req.params;
         const { titre, description, prix } = req.body;
+        const paths  = req.filesPath;
 
         //VERIFY USER IS ADMIN
         // if (!admins.includes(req.authMail)){
@@ -111,6 +117,26 @@ module.exports = {
         if (affectedRows === 0) {
             // No rows were updated, the entry may not exist
             throw new Error("Annonce not found");
+        }
+
+        try {
+            const images = await imageModel.findAll({ where: {id_annonce: req.params.id }})
+            const bucket = storage.bucket(bucket_name);
+            for (let i = 0; i < images.length; i++) {
+              const file = bucket.file(images[i].path);
+              const fileExists = await file.exists();
+              if(fileExists[0] && !paths.includes(images[i].path)){
+                await file.delete();
+              }
+            }          
+        } catch (err) {
+            throw new Error("Error while editing images");
+        }
+
+        const image = await imageModel.destroy({ where: { id_annonce: id } });
+
+        for (let element of paths) {
+            const image = await imageModel.create({ id_annonce: id, path : element });
         }
 
         // Annonce updated successfully

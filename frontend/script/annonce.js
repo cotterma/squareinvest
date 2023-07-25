@@ -3,6 +3,7 @@ import { showPreviousSlide, showNextSlide, resetSlide} from "./gallery.js";
 import { sendDemand } from "./demande.js";
 
 let selectedImages = [];
+let selectedEditImages = [];
 
 
 function sendAnnonce() {
@@ -13,7 +14,7 @@ function sendAnnonce() {
   error.style.color = "green"
   error.innerText = "Envoi en cours..."
   var files = selectedImages; // Récupérer le fichier sélectionné
-  if (files || files.length > 0) {
+  if (files && files.length > 0) {
     // Créer une instance de FormData et y ajouter le fichier
     var formData = new FormData();
     for (var i = 0; i < files.length; i++) {
@@ -57,6 +58,8 @@ function sendAnnonce() {
     // en utilisant l'URL et la méthode appropriées, en utilisant formData comme corps de la requête.
   } else {
     console.log("Aucune image sélectionnée");
+    error.style.color = "red"
+    error.innerText = "Aucune image sélectionnée"
   }
 }
 
@@ -351,7 +354,7 @@ async function refresh() {
   window.location.reload();
 }
 
-function showEdit(element) {
+async function showEdit(element) {
   const id = element.getAttribute("id");
   const parent = element.parentNode;
   if (parent.classList.contains("editing")) {
@@ -363,7 +366,27 @@ function showEdit(element) {
       previousEdit.classList.remove("editing");
       previousEdit.removeChild(previousEdit.lastChild);
     }
-
+    const url = back + "/annonce/" + id;
+    const annonce = await fetch(url, {
+      method: "GET",
+    })
+      .then((response) => {
+        // Traiter la réponse du serveur
+        if (response.ok) {
+          return response.json();
+        } else {
+          return response.json().then((error) => {
+            throw error;
+          });
+        }
+      })
+      .then((json) => {
+        return json;
+      })
+      .catch((error) => {
+        // Gérer les erreurs
+        console.log(error);
+      });
     parent.classList.add("editing");
     const form = document.createElement("div");
     form.classList.add("edit-form");
@@ -372,18 +395,44 @@ function showEdit(element) {
     title_input.setAttribute("type", "text");
     title_input.setAttribute("id", "title-edit");
     title_input.setAttribute("placeholder", "Titre");
+    title_input.value = annonce.data.titre;
     form.appendChild(title_input);
 
     const description_input = document.createElement("textarea");
     description_input.setAttribute("id", "description-edit");
     description_input.setAttribute("placeholder", "Description");
+    description_input.innerText = annonce.data.description;
     form.appendChild(description_input);
 
     const info_input = document.createElement("input");
     info_input.setAttribute("type", "text");
     info_input.setAttribute("id", "info-edit");
     info_input.setAttribute("placeholder", "Prix");
+    info_input.value = annonce.data.prix;
     form.appendChild(info_input);
+
+    const input_image = document.createElement("input");
+    input_image.setAttribute("type", "file");
+    input_image.setAttribute("id", "edit-img");
+    input_image.setAttribute("accept", "image/*");
+    form.appendChild(input_image);
+
+    const show_img = document.createElement("div");
+    show_img.setAttribute("id", "show-edit");
+    form.appendChild(show_img);
+
+    input_image.addEventListener('change', handleEditImageSelection);
+    selectedEditImages = [];
+    for (let image of annonce.data.paths) {
+      const url = back + "/" + image;
+      const img = createEditImagePreview(url);
+      show_img.appendChild(img);
+      await createNewFile(url).then((file) => {selectedEditImages.push(file)});
+    }
+
+    const span = document.createElement("span");
+    span.setAttribute("id", "error-edit");
+    form.appendChild(span);
 
     const submit_button = document.createElement("button");
     submit_button.setAttribute("id", "submit-edit");
@@ -395,7 +444,6 @@ function showEdit(element) {
       "click",
       () => {
         editAnnonce();
-        showEdit(element);
       },
       false
     );
@@ -414,6 +462,22 @@ function editAnnonce() {
     document.querySelector("#description-edit").value
   );
   formData.append("prix", document.querySelector("#info-edit").value);
+  const files = selectedEditImages; // Récupérer le fichier sélectionné
+  const error = document.getElementById("error-edit");
+  error.style.color = "green"
+  error.innerText = "Modification en cours.."
+  if (files && files.length > 0) {
+    // Créer une instance de FormData et y ajouter le fichier
+    for (var i = 0; i < files.length; i++) {
+      var file = files[i];
+      formData.append("image", file);
+    }
+  }
+  else{
+    error.style.color = "red"
+    error.innerText = "Aucune image sélectionnée"
+    return
+  }
   fetch(url, {
     method: "PUT",
     headers: {
@@ -425,6 +489,7 @@ function editAnnonce() {
       // Traiter la réponse du serveur
       if (response.ok) {
         console.log("Annonce modifiée avec succès");
+        error.innerText = "Annonce modifiée avec succès";
         refresh();
       } else {
         return response.json().then((error) => {
@@ -432,9 +497,11 @@ function editAnnonce() {
         });
       }
     })
-    .catch((error) => {
+    .catch((err) => {
       // Gérer les erreurs
-      console.log(error);
+      error.style.color = "red"
+      error.innerText = "Une erreur est survenue lors de la modification de l'annonce, veuillez réessayer";
+      console.log(err);
     });
 }
 
@@ -498,6 +565,86 @@ function handleImageSelection(event) {
   imageInput.value = '';
 }
 
+async function fetchImageAsBlob(url) {
+  const response = await fetch(url);
+  const data = await response.blob();
+  return data;
+}
+
+// Function to create a new File object from a Blob
+function createFileFromBlob(blob, fileName, fileType) {
+  return new File([blob], fileName, { type: fileType, lastModified: Date.now() });
+}
+
+async function getImageInfoFromURL(imageURL) {
+  try {
+    const response = await fetch(imageURL, {
+      method: "HEAD",
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch image information");
+    }
+
+    const imageName = getFileNameFromURL(imageURL);
+    const imageType = response.headers.get("content-type");
+
+    return { name: imageName, type: imageType };
+  } catch (error) {
+    console.error("Error:", error);
+    return null;
+  }
+}
+
+function getFileNameFromURL(url) {
+  return url.split("/").pop();
+}
+
+// Usage example
+async function createNewFile(imagePath) {
+  try {
+    const imageBlob = await fetchImageAsBlob(imagePath);
+    const new_file = getImageInfoFromURL(imagePath)
+    .then((imageInfo) => {
+        const newFileName = imageInfo.name; // Specify the desired file name
+        const newFileType = imageInfo.type; // Specify the desired file type (MIME type)
+        const newFile = createFileFromBlob(imageBlob, newFileName, newFileType);
+        return newFile;
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+    return new_file;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+function handleEditImageSelection(event) {
+  
+  const files = event.target.files;
+  const imageEditPreviewContainer = document.getElementById('show-edit');
+
+  // Loop through selected files and create image previews
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    const reader = new FileReader();
+
+    reader.onload = function(event) {
+      const imageUrl = event.target.result;
+      const imagePreview = createEditImagePreview(imageUrl);
+      selectedEditImages.push(file);
+      imageEditPreviewContainer.appendChild(imagePreview);
+    };
+
+    reader.readAsDataURL(file);
+  }
+
+  // Clear the input field to allow selecting more images
+  const imageEditInput = document.getElementById('edit-img');
+  imageEditInput.value = '';
+}
+
 // Function to create an image preview with a delete button
 function createImagePreview(imageUrl) {
   const imageElement = document.createElement('img');
@@ -514,6 +661,27 @@ function createImagePreview(imageUrl) {
     const index = Array.from(imagePreviewContainer.children).indexOf(imageElement);
     selectedImages.splice(index, 1);
     imagePreviewContainer.removeChild(imageElement);
+  });
+
+  return imageElement;
+}
+
+// Function to create an image preview with a delete button
+function createEditImagePreview(imageUrl) {
+  const imageElement = document.createElement('img');
+  imageElement.src = imageUrl;
+  imageElement.style.cursor = 'pointer';
+  imageElement.addEventListener('mouseover', function() {
+    imageElement.style.opacity = '0.5';
+  });
+  imageElement.addEventListener('mouseout', function() {
+    imageElement.style.opacity = '1';
+  });
+
+  imageElement.addEventListener('click', function() {
+    const index = Array.from(document.getElementById('show-edit').children).indexOf(imageElement);
+    selectedEditImages.splice(index, 1);
+    document.getElementById('show-edit').removeChild(imageElement);
   });
 
   return imageElement;
