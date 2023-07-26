@@ -401,6 +401,7 @@ async function showEdit(element) {
     const description_input = document.createElement("textarea");
     description_input.setAttribute("id", "description-edit");
     description_input.setAttribute("placeholder", "Description");
+    description_input.setAttribute("rows", "8");
     description_input.innerText = annonce.data.description;
     form.appendChild(description_input);
 
