@@ -235,7 +235,7 @@ app.put('*/annonce/*', upload.array('image'), async function (req, res, next) {
   // Process each uploaded file
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
-    const newFilename = file.originalname;
+    const newFilename = Date.now() + file.originalname;
     const fileDestination = 'images/' + newFilename;
     const gcsFile = bucket.file(fileDestination);
     const fileExists = await gcsFile.exists();
@@ -368,7 +368,7 @@ app.post('*/annonce', upload.array('image'), async (req, res, next) => {
   // Process each uploaded file
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
-    const newFilename = file.originalname;
+    const newFilename = Date.now() + file.originalname;
     const fileDestination = 'images/' + newFilename;
     const gcsFile = bucket.file(fileDestination);
     const fileExists = await gcsFile.exists();
