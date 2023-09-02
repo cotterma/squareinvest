@@ -94,7 +94,7 @@ async function getAnnonces() {
       main.removeChild(loading);
       const error_message = document.createElement("div");
       error_message.setAttribute("id", "error-appartement");
-      error_message.innerText = "Une erreur est survenue lors du chargement des annonces, veuillez rafraichir la page";
+      error_message.innerText = "Une erreur est survenue lors du chargement des annonces, veuillez rafraichir la page \n. Si le problème persiste, il s'agit d'un problème d'hébergeur, veuillez réessayer plus tard.";
       error_message.style.display = "flex";
       error_message.style.justifyContent = "center";
       error_message.style.textAlign = "center";
