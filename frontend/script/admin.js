@@ -60,6 +60,7 @@ function verifPass(){
     window.location.reload()
   })  
   .catch((error) => {
+    document.querySelector("#error-auth").textContent = "Problème de serveur, veuillez réessayer plus tard"
     console.log(error)
   })
 }
