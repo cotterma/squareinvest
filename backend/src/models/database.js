@@ -1,16 +1,16 @@
 // Load Enviroment Variables to process.env (if not present take variables defined in .env file)
-require("mandatoryenv").load(["DB"]);
-const { DB } = process.env;
+require("mandatoryenv").load(["ORACLE_PASSWORD", "WALLET_PASSWORD"]);
+const { ORACLE_PASSWORD, WALLET_PASSWORD } = process.env;
 
 const connectionConfig = {
   dialect: "oracle",
   username: "ADMIN",
-  password: "Ffe5#qp7h7&D?Z",
+  password: ORACLE_PASSWORD,
   dialectOptions: {
     connectString:
       "(description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.eu-paris-1.oraclecloud.com))(connect_data=(service_name=gacec186cce94f5_squareinvestdb_high.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))",
     walletLocation: "./Wallet_squareinvestDB",
-    walletPassword: "Macpcgaming24",
+    walletPassword: WALLET_PASSWORD,
   },
 };
 

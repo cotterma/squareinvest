@@ -22,7 +22,7 @@ const fs = require('fs');
 const admins = require('./admins.js')
 const sharp = require('sharp');
 const { PDFDocument } = require('pdf-lib');
-
+require("mandatoryenv").load(["GOOGLE_CLOUD"]);
 
 // Instantiate an Express Application
 const app = express()
@@ -46,7 +46,7 @@ const credentials = {
 //   }
 // });
 
-const keyFile = 'square-387510-fe1d4124a8da.json'
+const keyFile = JSON.parse(process.env.GOOGLE_CLOUD);
 const storage = new Storage({ keyFilename: keyFile });
 const bucket_name = 'squareinvest38'
 
