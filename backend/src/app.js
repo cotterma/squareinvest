@@ -47,7 +47,7 @@ const credentials = {
 // });
 
 const keyFile = JSON.parse(process.env.GOOGLE_CLOUD);
-const storage = new Storage({ keyFilename: keyFile });
+const storage = new Storage({ credentials: keyFile });
 const bucket_name = 'squareinvest38'
 
 // // Set up the storage configuration for images
