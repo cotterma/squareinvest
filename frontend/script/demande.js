@@ -31,6 +31,8 @@ function sendDemand(){
             error.innerHTML = "Demande envoyée";
         }
         else{
+            error.innerHTML = "Problème de communication avec le serveur";
+            error.style.color = "red";
             throw new Error("Problème de communication avec le serveur");
         }
     });
