@@ -1,5 +1,5 @@
-import admin_pass from "../../../password";
-import 'cypress-file-upload'
+require("mandatoryenv").load(["ADMIN_PASSWORD"]);
+const {ADMIN_PASSWORD} = process.env;
 
 describe('Retrieving announces test', () => {
     it('test1', () => {
@@ -15,7 +15,7 @@ describe('Retrieving announces test', () => {
       // Fill out the form fields
       cy.get('#admin-main').click();
       cy.get('#espace-admin').click();
-      cy.get('#auth-password').type(admin_pass);
+      cy.get('#auth-password').type(ADMIN_PASSWORD);
       cy.get('#auth-valid').click();
 
       cy.wait(1000)
@@ -37,7 +37,7 @@ describe('Retrieving announces test', () => {
       cy.visit('http://127.0.0.1:5500/frontend/index.html');
       cy.get('#admin-main').click();
       cy.get('#espace-admin').click();
-      cy.get('#auth-password').type(admin_pass);
+      cy.get('#auth-password').type(ADMIN_PASSWORD);
       cy.get('#auth-valid').click();
 
       cy.wait(5000)
