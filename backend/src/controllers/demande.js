@@ -2,13 +2,14 @@ const status = require("http-status")
 const has = require('has-keys')
 const admins = require('../admins.js')
 const nodemailer = require('nodemailer');
+require("mandatoryenv").load(["GOOGLE_PASSWORD"]);
 
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: 'squareinvest38@gmail.com',
-      pass: 'nkqjnuknsdtsmhsl'
+      pass: process.env.GOOGLE_PASSWORD
     }
   });
 

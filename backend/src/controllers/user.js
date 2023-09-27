@@ -10,6 +10,8 @@ const messageModel = require('../models/messages.js')
 const {Op} = require('sequelize')
 const nodemailer = require('nodemailer');
 const admins = require('../admins.js')
+require("mandatoryenv").load(["GOOGLE_PASSWORD"]);
+
 
 function isPasswordValid(password) { // At least 4 characters
   return /^[a-z | A-Z | 0-9 | ! | @ | # | $ | % | ^ | & | *]{4,}$/.test(password)
@@ -43,7 +45,7 @@ const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'squareinvest38@gmail.com',
-    pass: 'nkqjnuknsdtsmhsl'
+    pass: process.env.GOOGLE_PASSWORD
   }
 });
 

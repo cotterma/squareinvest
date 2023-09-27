@@ -4,10 +4,11 @@ const annonceModel = require('../models/annonces.js')
 const imageModel = require('../models/images.js')
 const admins = require('../admins.js')
 const db = require('../models/database.js')
+require("mandatoryenv").load(["GOOGLE_CLOUD"]);
 
-const keyFile = 'square-387510-fe1d4124a8da.json'
 const { Storage } = require('@google-cloud/storage');
-const storage = new Storage({ keyFilename: keyFile });
+const keyFile = JSON.parse(process.env.GOOGLE_CLOUD);
+const storage = new Storage({ credentials: keyFile });
 const bucket_name = 'squareinvest38'
 
 module.exports = {

@@ -5,13 +5,14 @@ const userModel = require('../models/users.js')
 const {Op} = require('sequelize')
 const nodemailer = require('nodemailer');
 const db = require('../models/database.js')
+require("mandatoryenv").load(["GOOGLE_PASSWORD"]);
 
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'squareinvest38@gmail.com',
-    pass: 'nkqjnuknsdtsmhsl'
+    pass: process.env.GOOGLE_PASSWORD
   }
 });
 
