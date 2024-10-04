@@ -24,8 +24,6 @@ const sharp = require("sharp");
 const { PDFDocument } = require("pdf-lib");
 const crypto = require('crypto');
 
-require("mandatoryenv").load(["GOOGLE_CLOUD"]);
-
 // Instantiate an Express Application
 const app = express();
 
