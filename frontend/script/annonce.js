@@ -15,6 +15,65 @@ function resolveAnnonceImagePath(path) {
   return usesStaticAnnonces() ? path : `${back}/${path}`;
 }
 
+function appendFormattedDescription(container, description) {
+  container.innerHTML = "";
+
+  const paragraphs = description
+    .split(/\n\s*\n/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
+
+  for (const paragraph of paragraphs) {
+    const lines = paragraph
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean);
+
+    for (const line of lines) {
+      const items = line.split(" - ").map((item) => item.trim()).filter(Boolean);
+
+      if (items.length > 1) {
+        const hasLabel = line.includes(":");
+        let label = "";
+        let listItems = items;
+
+        if (hasLabel) {
+          const firstSeparator = line.indexOf(":");
+          label = line.slice(0, firstSeparator + 1).trim();
+          const remainder = line.slice(firstSeparator + 1).trim();
+          listItems = remainder.split(" - ").map((item) => item.trim()).filter(Boolean);
+        }
+
+        const block = document.createElement("div");
+        block.classList.add("selected-description-block");
+
+        if (label) {
+          const heading = document.createElement("div");
+          heading.classList.add("selected-description-heading");
+          heading.innerText = label;
+          block.appendChild(heading);
+        }
+
+        const list = document.createElement("ul");
+        list.classList.add("selected-description-list");
+        for (const item of listItems) {
+          const listItem = document.createElement("li");
+          listItem.innerText = item;
+          list.appendChild(listItem);
+        }
+        block.appendChild(list);
+        container.appendChild(block);
+        continue;
+      }
+
+      const paragraphElement = document.createElement("p");
+      paragraphElement.classList.add("selected-description-paragraph");
+      paragraphElement.innerText = line;
+      container.appendChild(paragraphElement);
+    }
+  }
+}
+
 
 function sendAnnonce() {
   var title = document.getElementById("titre-annonce").value;
@@ -372,7 +431,7 @@ async function displayAnnonce(element) {
 
   const announce_description = document.createElement("div");
   announce_description.classList.add("selected-description");
-  announce_description.innerText = annonce.data.description;
+  appendFormattedDescription(announce_description, annonce.data.description);
   announce_content.appendChild(announce_description);
 
   const backendReachable = await checkBackendReachability();

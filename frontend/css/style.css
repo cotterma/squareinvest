@@ -326,6 +326,7 @@ footer {
   word-wrap: break-word;
   font-size: 1em;
   white-space: pre-line;
+  line-height: 1.5;
   text-overflow: ellipsis;
   overflow: hidden;
   display: -webkit-box;

@@ -63,12 +63,34 @@ right: 0px;
 
 .selected-description{
     word-wrap: break-word;
-    white-space: pre-line;
     overflow:hidden;
     max-width: 80%;
     font-size: 1.2em;
     margin : 0 auto;
     margin-top : 30px;
+    line-height: 1.7;
+}
+
+.selected-description-paragraph {
+    margin: 0 0 18px 0;
+}
+
+.selected-description-block {
+    margin-bottom: 18px;
+}
+
+.selected-description-heading {
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.selected-description-list {
+    margin: 0;
+    padding-left: 22px;
+}
+
+.selected-description-list li {
+    margin-bottom: 6px;
 }
 
 .hidden{
