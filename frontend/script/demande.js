@@ -1,5 +1,24 @@
 import {back} from './config.js';
 
+let backendReachabilityPromise;
+
+function checkBackendReachability(forceRefresh = false) {
+    if (!forceRefresh && backendReachabilityPromise) {
+        return backendReachabilityPromise;
+    }
+
+    backendReachabilityPromise = fetch(back + "/annonces", {
+        method: "GET",
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+        },
+    })
+    .then((response) => response.ok)
+    .catch(() => false);
+
+    return backendReachabilityPromise;
+}
+
 function sendDemand(){
     const nom = document.getElementById("nom").value;
     const prenom = document.getElementById("prenom").value;
@@ -35,8 +54,13 @@ function sendDemand(){
             error.style.color = "red";
             throw new Error("Problème de communication avec le serveur");
         }
+    })
+    .catch(() => {
+        error.innerHTML = "Problème de communication avec le serveur";
+        error.style.color = "red";
+        backendReachabilityPromise = Promise.resolve(false);
     });
 }
 
-export {sendDemand};
+export {sendDemand, checkBackendReachability};
 

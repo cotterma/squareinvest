@@ -1,9 +1,19 @@
-import { back, admins } from "./config.js";
+import { back, annoncesSource } from "./config.js";
 import { showPreviousSlide, showNextSlide, resetSlide} from "./gallery.js";
-import { sendDemand } from "./demande.js";
+import { sendDemand, checkBackendReachability } from "./demande.js";
+import { getStaticAnnonces, getStaticAnnonceById } from "./static-annonces.js";
 
 let selectedImages = [];
 let selectedEditImages = [];
+let contactTemplate;
+
+function usesStaticAnnonces() {
+  return annoncesSource === "static";
+}
+
+function resolveAnnonceImagePath(path) {
+  return usesStaticAnnonces() ? path : `${back}/${path}`;
+}
 
 
 function sendAnnonce() {
@@ -64,33 +74,32 @@ function sendAnnonce() {
 }
 
 async function getAnnonces() {
-  const main= document.querySelector(".appartement-main");
+  if (usesStaticAnnonces()) {
+    return { data: getStaticAnnonces() };
+  }
+
+  const main = document.querySelector(".appartement-main");
   const loading = document.createElement("div");
   loading.setAttribute("id", "loading-spinner");
-  main.append(loading)
+  main.append(loading);
   const url = back + "/annonces";
-  const annonces = await fetch(url, {
+
+  return fetch(url, {
     method: "GET",
     headers: {
       "Access-Control-Allow-Origin": "*",
     },
   })
     .then((response) => {
-      // Traiter la réponse du serveur
       if (response.ok) {
         main.removeChild(loading);
         return response.json();
-      } else {
-        return response.json().then((error) => {
-          throw error;
-        });
       }
-    })
-    .then((json) => {
-      return json;
+      return response.json().then((error) => {
+        throw error;
+      });
     })
     .catch((error) => {
-      // Gérer les erreurs
       main.removeChild(loading);
       const error_message = document.createElement("div");
       error_message.setAttribute("id", "error-appartement");
@@ -100,40 +109,46 @@ async function getAnnonces() {
       error_message.style.textAlign = "center";
       main.appendChild(error_message);
       console.log(error);
+      return { data: [] };
     });
-  return annonces;
 }
 
 async function getAnnonce(element) {
+  const id = element.getAttribute("id");
+  if (usesStaticAnnonces()) {
+    const annonce = getStaticAnnonceById(id);
+    if (!annonce) {
+      throw new Error(`Annonce introuvable: ${id}`);
+    }
+    return { data: annonce };
+  }
+
   const loading = document.createElement("div");
   loading.setAttribute("id", "loading-spinner");
   element.append(loading);
-  const id = element.getAttribute("id");
   const url = back + "/annonce/" + id;
-  const annonce = await fetch(url, {
+
+  return fetch(url, {
     method: "GET",
   })
     .then((response) => {
-      // Traiter la réponse du serveur
       if (response.ok) {
         return response.json();
-      } else {
-        return response.json().then((error) => {
-          throw error;
-        });
       }
+      return response.json().then((error) => {
+        throw error;
+      });
     })
     .then((json) => {
       element.removeChild(loading);
       return json;
     })
     .catch((error) => {
-      // Gérer les erreurs
       element.removeChild(loading);
-      alert("Une erreur est survenue lors du chargement de l'annonce")
+      alert("Une erreur est survenue lors du chargement de l'annonce");
       console.log(error);
+      return { data: null };
     });
-  return annonce;
 }
 
 async function setAnnonces() {
@@ -148,7 +163,7 @@ async function setAnnonces() {
     const announce_image = document.createElement("div");
     announce_image.classList.add("appartement-image");
     const image = document.createElement("img");
-    image.setAttribute("src", `${back + "/" + element.path}`);
+    image.setAttribute("src", resolveAnnonceImagePath(element.path));
     image.classList.add("crop-image");
     image.setAttribute("load", "lazy");
     announce_image.appendChild(image);
@@ -192,26 +207,52 @@ async function setAnnonces() {
 function setRestricted(json) {
   const list = document.querySelector("#liste-annonces");
   list.innerHTML = "";
+  const titles = document.querySelectorAll(".admin-menu .admin-title");
+  const addForm = document.querySelector("#ajout-annonce");
+
+  if (usesStaticAnnonces()) {
+    if (titles[0]) {
+      titles[0].innerText = "ANNONCES STATIQUES";
+    }
+    if (addForm) {
+      addForm.classList.add("hidden");
+    }
+
+    const info = document.createElement("div");
+    info.classList.add("annonce");
+    info.innerText = "Les annonces appartements sont désormais gérées statiquement dans le frontend.";
+    list.appendChild(info);
+  } else {
+    if (titles[0]) {
+      titles[0].innerText = "AJOUTER UNE ANNONCE";
+    }
+    if (addForm) {
+      addForm.classList.remove("hidden");
+    }
+  }
+
   for (let element of json.data) {
     const new_annonce = document.createElement("div");
     new_annonce.classList.add("annonce");
 
     const annonce_title = document.createElement("div");
     annonce_title.classList.add("annonce-title");
-    annonce_title.innerText = element.titre;
+    annonce_title.innerText = `${element.titre} - ${element.prix}€/mois`;
     new_annonce.appendChild(annonce_title);
 
-    const edit_button = document.createElement("button");
-    edit_button.classList.add("annonce-edit");
-    edit_button.innerText = "Modifier";
-    edit_button.setAttribute("id", element.id);
-    new_annonce.appendChild(edit_button);
+    if (!usesStaticAnnonces()) {
+      const edit_button = document.createElement("button");
+      edit_button.classList.add("annonce-edit");
+      edit_button.innerText = "Modifier";
+      edit_button.setAttribute("id", element.id);
+      new_annonce.appendChild(edit_button);
 
-    const delete_button = document.createElement("button");
-    delete_button.classList.add("annonce-delete");
-    delete_button.innerText = "Supprimer";
-    delete_button.setAttribute("id", element.id);
-    new_annonce.appendChild(delete_button);
+      const delete_button = document.createElement("button");
+      delete_button.classList.add("annonce-delete");
+      delete_button.innerText = "Supprimer";
+      delete_button.setAttribute("id", element.id);
+      new_annonce.appendChild(delete_button);
+    }
 
     const hr = document.createElement("hr");
     hr.classList.add("annonce-hr");
@@ -253,8 +294,20 @@ function back_appart() {
   main.classList.remove("hidden");
 }
 
+function getContactTemplate() {
+  if (!contactTemplate) {
+    const initialContact = document.querySelector(".selected-annonce #contact");
+    contactTemplate = initialContact ? initialContact.cloneNode(true) : null;
+  }
+
+  return contactTemplate ? contactTemplate.cloneNode(true) : null;
+}
+
 async function displayAnnonce(element) {
   const annonce = await getAnnonce(element);
+  if (!annonce.data) {
+    return;
+  }
   resetSlide();
   const selected_annonce = document.querySelector(".selected-annonce");
   let main = document.querySelector("main");
@@ -270,8 +323,10 @@ async function displayAnnonce(element) {
     }
   }
   selected_annonce.classList.remove("hidden");
-  const form = document.querySelector("#contact").cloneNode(true);
-  form.querySelector("#error-contact").innerText = "";
+  const form = getContactTemplate();
+  if (form) {
+    form.querySelector("#error-contact").innerText = "";
+  }
   selected_annonce.innerHTML = "";
   const back_button = document.createElement("div");
   back_button.classList.add("back-button");
@@ -293,10 +348,11 @@ async function displayAnnonce(element) {
 
   for (let element of annonce.data.paths) {
     const a = document.createElement("a");
-    a.setAttribute("href", `${back + "/" + element}`);
+    const imagePath = resolveAnnonceImagePath(element);
+    a.setAttribute("href", imagePath);
     a.setAttribute("target", "_blank");
     const image = document.createElement("img");
-    image.setAttribute("src", `${back + "/" + element}`);
+    image.setAttribute("src", imagePath);
     image.classList.add("slide");
     image.classList.add("hidden");
     a.appendChild(image);
@@ -319,14 +375,17 @@ async function displayAnnonce(element) {
   announce_description.innerText = annonce.data.description;
   announce_content.appendChild(announce_description);
 
-  selected_annonce.appendChild(form);
-  document.querySelector("#sendcontact").addEventListener(
-    "click",
-    () => {
-      sendDemand();
-    },
-    false
-  );
+  const backendReachable = await checkBackendReachability();
+  if (backendReachable && form) {
+    selected_annonce.appendChild(form);
+    document.querySelector("#sendcontact").addEventListener(
+      "click",
+      () => {
+        sendDemand();
+      },
+      false
+    );
+  }
   setGallery();
 }
 
@@ -509,6 +568,10 @@ function editAnnonce() {
 function refreshAdmin() {
 // if (admins.includes(localStorage.getItem("email"))) {
   if (localStorage.getItem("auth")){
+    if (usesStaticAnnonces()) {
+      return;
+    }
+
     document.querySelector("#send-annonce").addEventListener(
       "click",
       function () {
@@ -534,9 +597,8 @@ function refreshAdmin() {
         false
       );
     }
-    
-    // Event listener for when an image is selected
-    imageInput.addEventListener('change', handleImageSelection);
+
+    imageInput.addEventListener("change", handleImageSelection);
   }
 }
 
